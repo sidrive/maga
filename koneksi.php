@@ -15,7 +15,7 @@ if ($find_db) {
  
 }else {
  
- echo "";
+ echo "Database Tidak Ada";
  
 }*/
 try {
