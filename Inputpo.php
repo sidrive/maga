@@ -132,6 +132,27 @@
 	}
 	</script>
 	
+	<script>
+	function keran(){
+	$('#txtKeranjang').html('Loading ...');
+	$('#txtKeranjang').slideDown('slow');
+	
+	var kode   = $('#txt_nama').val();
+	var gender = $('#gender').val();
+	
+	$.ajax({
+		//Alamat url harap disesuaikan dengan lokasi script pada komputer anda
+		url	     : 'http://localhost/maga/keranjang.php',
+		type     : 'POST',
+		dataType : 'html',
+		data     : 'nama='+nama+'&gender='+gender,
+		success  : function(respons){
+			$('#txtKeranjang').html(respons);
+		},
+	})
+	}
+	</script>
+	
   </head>
   <body>
   
