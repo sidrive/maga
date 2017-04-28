@@ -49,7 +49,7 @@ echo "<div class='container'>
         // membuat link untuk mengedit dan menghapus data
         echo '<td>
 			<div class="clear"> 
-			<button type="button" onclick="keranJang('.$data['KODE_BRG'].',6)">Change Content</button>
+			<button type="button" onclick="keranJang('.$data['KODE_BRG'].')">Change Content</button>
         </td>';
         echo "</tr>";
         $no++; // menambah nilai nomor urut

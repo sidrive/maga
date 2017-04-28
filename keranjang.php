@@ -8,7 +8,7 @@
 <?php
 require_once("koneksi.php");
 $q = intval($_GET['kode']);
-$val = $_GET['jml'];
+$val = 1;
 	  
 		  $query = "SELECT * from brg WHERE KODE_BRG = $q";
 			$result = mysqli_query($connect_db, $query);
@@ -28,29 +28,43 @@ $val = $_GET['jml'];
 					  $id = 'FBMG'.date('dmy').'-'.$data['SUP'];
 					  $edit = date('Y-m-d');
 					 
-		$query1 = "INSERT INTO detail_po_sem (id_po, kode_brg, nama_brg, hrg_sup, jml_brg, total, tgl_edit)
-				VALUES ('$id', '$data[KODE_BRG]', '$data[NAMA_BRG]', $data[HRG_SUP], $val, $jumlah_harga, '$edit')";
-		$result1 = mysqli_query($connect_db, $query1);
+		$queryPosem = "SELECT * from detail_po_sem WHERE kode_brg = $q";
+		$resultPosem = mysqli_query($connect_db, $queryPosem);
+		$row = mysqli_fetch_assoc($resultPosem);
+			
+			if(!$row){
+					$query1 = "INSERT INTO detail_po_sem (id_po, kode_brg, barcode, nama_brg, hrg_sup, jml_brg, total, tgl_edit)
+					VALUES ('$id', '$data[KODE_BRG]', '$data[BARCODE]', '$data[NAMA_BRG]', $data[HRG_SUP], $val, $jumlah_harga, '$edit')";
+					$result1 = mysqli_query($connect_db, $query1);
+						if(!$result1){
+								die ("Query gagal dijalankan: ".mysqli_errno($connect_db).
+									" - ".mysqli_error($connect_db));
+						}
+			}else{							
+				
+				$jumlahUpdate = ($row['jml_brg']+1);
+				$totalHarga = ($row['hrg_sup'] * $jumlahUpdate);
+				$queUpdate = "Update detail_po_sem set jml_brg = $jumlahUpdate, total = $totalHarga where kode_brg = $q";
+				$resultUpdate = mysqli_query($connect_db, $queUpdate);
+			}
 	// periska query apakah ada error
-  if(!$result1){
-      die ("Query gagal dijalankan: ".mysqli_errno($connect_db).
-           " - ".mysqli_error($connect_db));
-  }
+  
 				
 	
 	echo "<div class='container'>
-    <h1>Tabel Data Barang </h1>
+    <h1>Tabel Detail PO </h1>
     <br/>
 	<div class='bodycontainer scrollable'>
     <table class='table table-condensed table-hover' >
       <tr class='info'>
  <th>No</th>
  <th>Kode Barang</th>
- <th>Nama Barang</th>
  <th>Barcode</th>
- <th>JUMLAH</th>
- <th>JUMLAH</th>
- <th>JUMLAH</th>
+ <th>Nama Barang</th>
+ <th>Harga Satuan</th>
+ <th>Jumlah</th>
+ <th>Jumlah</th>
+ <th>Sub Total</th>
  <th>Pilihan</th>
  </tr>";
       
@@ -71,22 +85,46 @@ $val = $_GET['jml'];
         // mencetak / menampilkan data
         echo "<tr>";
         echo "<td>$no</td>"; //menampilkan no urut
-        echo "<td>$data1[id_po]</td>"; //menampilkan data nim
         echo "<td>$data1[kode_brg]</td>"; //menampilkan data nama
+		echo "<td>$data1[barcode]</td>";
         echo "<td>$data1[nama_brg]</td>"; //menampilkan data fakultas
 		echo "<td>$data1[hrg_sup]</td>";
-		echo "<td>$data1[jml_brg]</td>";
+		echo "<td><input type='number_format' style='width:25px' id='jumlah' /></td>";
+		echo "<td><input type='number_format' style='width:25px' id='jumlah' value='$data1[jml_brg]' readonly /></td>";
 		echo "<td>$data1[total]</td>";
        
         // membuat link untuk mengedit dan menghapus data
         echo '<td>
 			<div class="clear"> 
-			<button type="button" onclick="keranjang(this."$data[KODE_BRG]",this."$data[JML_BARANG]")">Change Content</button>
+			<button type="button" onclick="">Tambah</button>
+			<button type="button" onclick="">Hapus</button>
         </td>';
         echo "</tr>";
         $no++; // menambah nilai nomor urut
       }
+	  $queryTotalPo = "SELECT sum(total) as total_po from detail_po_sem WHERE id_po = '$id'";
+		$resultTotalPo = mysqli_query($connect_db, $queryTotalPo);
+		$rowTotal = mysqli_fetch_assoc($resultTotalPo);
+	  $totalPo = $rowTotal['total_po'];
+	  if($totalPo == 0){
+					echo '<table><tr>
+						<td colspan="5" align="center">Ups, Keranjang kosong!</td>
+						</tr></table>';
+					echo '<p><div align="right">
+						<a href="cart.php?act=clear&amp;ref=input_PO.php?kode=0" class="btn btn-info">&laquo; INPUT PO BARU</a>
+						</div></p>';
+				} else {
+					echo '
+						<tr style="background-color: #DDD;"><td colspan="4" align="right"><h3><b>Total PO : </b></td><td align="right"><b>Rp. '.number_format($totalPo,2,",",".").'</b></h3></td></td></td><td></td></tr>
+						<p><div align="right">
+						<a href="cart.php?act=clear&amp;ref=input_PO.php?kode=0" class="btn btn-info">&laquo; INPUT PO BARU</a>
+						<a href="simpanpo.php?kode='.$data['SUP'].'" class="btn btn-success"><i class="glyphicon glyphicon-shopping-cart icon-white"></i> SIMPAN PO &raquo;</a>
+						</div></p>
+					';
+				} 
+
 	  echo "</table>";
+		
         ?>
 </body>
 </html>
