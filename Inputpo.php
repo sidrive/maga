@@ -110,7 +110,7 @@
 	
 	<script>
 	function keranJang(str,jml) {
-    if (str == "") {
+    if (str == "" && jml == "") {
         document.getElementById("txtKeranjang").innerHTML = "";
         return;
     } else { 
@@ -126,30 +126,33 @@
                 document.getElementById("txtKeranjang").innerHTML = this.responseText;
             }
         };
-        xmlhttp.open("GET","keranjang.php?kode="+str+"?jml="+jml,true);
+        xmlhttp.open("GET","keranjang.php?kode="+str+"&jml="+jml,true);
         xmlhttp.send();
     }
 	}
 	</script>
 	
 	<script>
-	function keran(){
-	$('#txtKeranjang').html('Loading ...');
-	$('#txtKeranjang').slideDown('slow');
-	
-	var kode   = $('#txt_nama').val();
-	var gender = $('#gender').val();
-	
-	$.ajax({
-		//Alamat url harap disesuaikan dengan lokasi script pada komputer anda
-		url	     : 'http://localhost/maga/keranjang.php',
-		type     : 'POST',
-		dataType : 'html',
-		data     : 'nama='+nama+'&gender='+gender,
-		success  : function(respons){
-			$('#txtKeranjang').html(respons);
-		},
-	})
+	function tambah(kode,jml) {
+    if (kode == "" && jml == "") {
+        document.getElementById("txtKeranjang").innerHTML = "";
+        return;
+    } else { 
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("txtKeranjang").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET","tambah.php?kode="+kode+"&jml="+jml,true);
+        xmlhttp.send();
+    }
 	}
 	</script>
 	
@@ -257,71 +260,10 @@
   </select>
 </form>
 
-			<!-- start: Table -->
-            <div class="title"><h3>Detail PO </h3></div>
-				<table class="table-responsive table-hover table-condensed">
-				<tr>
-					<th><center>No</center></th>
-                    <th><center>Kode Barang</center></th>
-					<th><center>Nama Barang</center></th>
-					<th><center>Jumlah</center></th>
-					<th><center>Harga Satuan</center></th>
-					<th><center>Sub Total</center></th>
-					<th><center>Opsi</center></th>
-				</tr>
-			    <?php
-				//MENAMPILKAN DETAIL KERANJANG BELANJA//
-				
-                
-    $total = 0;
-	echo "<div id='txtKeranjang'><b>Person info will be listed here...</b></div>";
-    //mysql_select_db($database_conn, $conn);
-    if (isset($_SESSION['items'])) {
-        foreach ($_SESSION['items'] as $key => $val) {
-            $query = mysqli_query($connect_db, "select * from brg where KODE_BRG = '$key'");
-            $data = mysqli_fetch_array($query);
-
-            $jumlah_harga = $data['HRG_SUP'] * $val;
-            $total += $jumlah_harga;
-            $no++;
-            ?>
-                <tr>
-                <td><center><?php echo $no; ?></center></td>
-                <td><center><?php echo $data['KODE_BRG']; ?></center></td>
-                <td><center><?php echo $data['NAMA_BRG']; ?></center></td>
-				<td><center><Input type="text" name="val" id="val" value="<?php echo number_format($val); ?>"></center></td>
-                <td><center><?php echo number_format($data['HRG_SUP']); ?></center></td>                
-                <td><center><?php echo number_format($jumlah_harga); ?></center></td>
-                <td><center>
-				<a href="cart.php?act=plus&amp;barang_id=<?php echo $key; ?>&amp;val=<?php echo $val; ?>&amp;ref=input_PO.php?kode=<?php echo $data['SUP']; ?>" class="btn btn-xs btn-success">Tambah</a> 
-				<a href="cart.php?act=min&amp;barang_id=<?php echo $key; ?>&amp;ref=input_PO.php?kode=<?php echo $data['SUP']; ?>" class="btn btn-xs btn-warning">Kurang</a> 
-				<a href="cart.php?act=del&amp;barang_id=<?php echo $key; ?>&amp;ref=input_PO.php?kode=<?php echo $data['SUP']; ?>" class="btn btn-xs btn-danger">Hapus</a></center></td>
-                </tr> 
-                
-					<?php
-                    //mysql_free_result($query);			
-						}
-							//$total += $sub;
-						}?>  
-                         <?php
-				if($total == 0){
-					echo '<table><tr>
-						<td colspan="5" align="center">Ups, Keranjang kosong!</td>
-						</tr></table>';
-					echo '<p><div align="right">
-						<a href="cart.php?act=clear&amp;ref=input_PO.php?kode=0" class="btn btn-info">&laquo; INPUT PO BARU</a>
-						</div></p>';
-				} else {
-					echo '
-						<tr style="background-color: #DDD;"><td colspan="4" align="right"><b>Total :</b></td><td align="right"><b>Rp. '.number_format($total,2,",",".").'</b></td></td></td><td></td></tr>
-						<p><div align="right">
-						<a href="cart.php?act=clear&amp;ref=input_PO.php?kode=0" class="btn btn-info">&laquo; INPUT PO BARU</a>
-						<a href="simpanpo.php?kode='.$data['SUP'].'" class="btn btn-success"><i class="glyphicon glyphicon-shopping-cart icon-white"></i> SIMPAN PO &raquo;</a>
-						</div></p>
-					';
-				}
-				?>
-				</table>
+			             
+    
+	<div id='txtKeranjang'><b></b></div>
+    
 			<!-- end: Table -->
 		</div>
 		<!-- end: Container -->

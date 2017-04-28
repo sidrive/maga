@@ -7,8 +7,8 @@
 
 <?php
 require_once("koneksi.php");
-$q = intval($_GET['kode']);
-$val = intval($_GET['jml']);
+$q = intval($_GET['kode_brg']);
+$val = intval($_GET['jmledit']);
 	  
 		  $query = "SELECT * from brg WHERE KODE_BRG = $q";
 			$result = mysqli_query($connect_db, $query);
