@@ -40,7 +40,35 @@
 	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Economica:700,400italic">
   <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="js/simpleAjax.1.0.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	  <script type="text/javascript" src="http://belajarnge.web.id/alat/jquery-3.1.1.js"></script>
+     <script type="text/javascript" src="http://belajarnge.web.id/alat/framework.jquery.js"></script>
+     <script type="text/javascript">
+          $("document").ready(function() {
+               $("#insert").click(function() {
+                    var nama = $("#nama").val();
+                    var email = $("#email").val();
+                    var data = 'nama='+nama+'&email='+email;
+                    ajax("tambah.php", data);
+               });
+          });
+     </script>
+	 <script type="text/javascript">
+	$(document).ready(function(){
+		$(".tombol-simpan").click(function(){
+			var data = $('.tambahdata').serialize();
+			$.ajax({
+				type: 'POST',
+				url: "tambah.php",
+				data: data,
+				success: function() {
+					$('.txtKeranjang').load("keranjang.php");
+				}
+			});
+		});
+	});
+	</script>
 	<!-- end: CSS -->
 	
       <style>
@@ -56,6 +84,7 @@
     </style>
 	
 	<!-- script ajax untuk memanggil data barang per suplier -->
+	
 	<script>
 	function showDatabarang(str) {
     if (str == "") {
@@ -150,15 +179,30 @@
                 document.getElementById("txtKeranjang").innerHTML = this.responseText;
             }
         };
-        xmlhttp.open("GET","tambah.php?kode="+kode+"&jml="+jml,true);
+        xmlhttp.open("GET","tambah.php?kode_brg="+kode+"&jmledit="+jml,true);
         xmlhttp.send();
     }
 	}
 	</script>
 	
+	<script type="text/javascript">
+	simpleAjax = $("body").simpleAjax(); 
+	
+	function tambah1(data, theTag){
+	var j = simpleAjax.json_decode(data);	
+
+	//theTag is the selector of the button you clicked, so you can manipulate it when AJAX call returns
+	theTag.fadeOut();
+
+	$("#result_register").html("<br/>"+j.jmledit +"<br/>"+ j.kode_brg +"<br/>"+ j.jumlah);
+	$("#result_register").slideDown();
+
+	}	
+	</script>
+	
   </head>
   <body>
-  
+
  	  <script src="jquery-1.10.2.min.js"></script>
         <script src="jquery.chained.min.js"></script>
         <script>
@@ -263,6 +307,8 @@
 			             
     
 	<div id='txtKeranjang'><b></b></div>
+	
+	<div id="result_register"></div>
     
 			<!-- end: Table -->
 		</div>

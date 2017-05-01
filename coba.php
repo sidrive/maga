@@ -21,6 +21,7 @@ echo "<div class='container'>
  <th>Nama Barang</th>
  <th>Barcode</th>
  <th>JUMLAH</th>
+ <th>JUMLAH</th>
  <th>Pilihan</th>
  </tr>";
       
@@ -45,12 +46,13 @@ echo "<div class='container'>
         echo "<td>$data[NAMA_BRG]</td>"; //menampilkan data nama
         echo "<td>$data[BARCODE]</td>"; //menampilkan data fakultas
 		echo "<td>$data[JML_BARANG]</td>";
+		echo "<td><form name='edit'><input type='number_format' style='width:25px' name='jmledit'/></form></td>";
        
         // membuat link untuk mengedit dan menghapus data
         echo '<td>
 			<div class="clear"> 
-			<button type="button" onclick="keranJang('.$data['KODE_BRG'].',1)">Change Content</button>
-        </td>';
+			<button type="button" onclick="keranJang('.$data['KODE_BRG'].','.$data['JML_BARANG'].')">Change Content</button>
+			</td>';
         echo "</tr>";
         $no++; // menambah nilai nomor urut
       }

@@ -3,8 +3,9 @@
 <head>
 
 </head>
-<body>
 
+<body>
+<div id='txtKeranjang'><b></b></div>
 <?php
 require_once("koneksi.php");
 $q = intval($_GET['kode']);
@@ -89,16 +90,22 @@ $val = intval($_GET['jml']);
 		echo "<td>$data1[barcode]</td>";
         echo "<td>$data1[nama_brg]</td>"; //menampilkan data fakultas
 		echo "<td>$data1[hrg_sup]</td>";
-		echo "<td><input type='number_format' style='width:25px' id='jmledit' />
-		<input type='number_format' style='width:25px' id='kode_brg' value='$data1[kode_brg]' hidden /></td>";
-		echo "<td><input type='number_format' style='width:25px' id='jumlah' value='$data1[jml_brg]' readonly /></td>";
+		echo "<td><form name='formtambah' >
+		<input type='number_format' style='width:25px' name='jmledit' /> 
+		<input type='number_format' style='width:25px' name='kode_brg' value='$data1[kode_brg]' hidden />
+		<input type='number_format' style='width:25px' name='jumlah' value='$data1[jml_brg]' hidden />
+		<button type='button' onclick='tambah(formtambah.kode_brg.value,formtambah.jmledit.value);'>Tambah</button>
+		</form></td>";
+		echo "<td><input type='number_format' style='width:25px' name='jumlah' value='$data1[jml_brg]' readonly /></td>";
 		echo "<td>$data1[total]</td>";
        
         // membuat link untuk mengedit dan menghapus data
         echo '<td>
-			<div class="clear"> 
-			<button type="button" onclick="tambah()">Tambah</button>
-			<button type="button" onclick="">Hapus</button>
+			<div class="clear">
+			<input type="submit" name="login" value="Send" />
+			<button type="button" onclick="tambah(formtambah.kode_brg.value,formtambah.jmledit.value)">Tambah</button>
+			<button type="button" onclick="">Hapus</button> 
+			
         </td>';
         echo "</tr>";
         $no++; // menambah nilai nomor urut
