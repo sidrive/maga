@@ -23,8 +23,7 @@
 
 <?php
 
-$id = intval($_GET['kode']);
-	  
+$id = $_GET['kode'];
 		 	
 	echo "<div class='container'>
     <h1>Tabel Detail PO </h1>
@@ -68,7 +67,6 @@ $id = intval($_GET['kode']);
 		<input type='number_format' style='width:25px' name='jmledit' /> 
 		<input type='number_format' style='width:25px' name='kode_brg' value='$data1[kode_brg]' hidden />
 		<input type='number_format' style='width:25px' name='jumlah' value='$data1[jml_brg]' hidden />
-		<button type='button' onclick='tambah(formtambah.kode_brg.value,formtambah.jmledit.value);'>Tambah</button>
 		</form></td>";
 		echo "<td><input type='number_format' style='width:25px' name='jumlah' value='$data1[jml_brg]' readonly /></td>";
 		echo "<td>$data1[total]</td>";
@@ -94,9 +92,15 @@ $id = intval($_GET['kode']);
 	  $status_maga = 'Y';
 	  $status_suplier = 'N';
 	  $kode_sup = substr($id,-4);
+	  date_default_timezone_set("Asia/Jakarta");
+		  $edit = date('Y-m-d');
 	  
 	  $simpanpo = "INSERT INTO po (id_po, kode_sup, tgl_po, total, status_maga, status_suplier)
-					VALUES ('$id','$kode_sup','$data1[tgl_edit]',$rowTotal['total_po'], $status_maga, $status_suplier)";
+					VALUES ('$id','$kode_sup','$edit',$rowTotal[total_po], '$status_maga', '$status_suplier')";
+					$resultSimpanPo = mysqli_query($connect_db, $simpanpo);
+					
+		$hapuspo = "DELETE from detail_po_sem where id_po = '$id'";
+					$resultSimpanPo = mysqli_query($connect_db, $simpanpo);			
 	  
         ?>
 </body>
