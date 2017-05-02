@@ -133,7 +133,7 @@ $val = intval($_GET['jml']);
 					echo '
 						<p><div align="right">
 						<a href="cart.php?act=clear&amp;ref=input_PO.php?kode=0" class="btn btn-info">&laquo; INPUT PO BARU</a>
-						<a href="simpanpo.php?kode='.$data['SUP'].'" class="btn btn-success"><i class="glyphicon glyphicon-shopping-cart icon-white"></i> SIMPAN PO &raquo;</a>
+						<a href="simpanpo.php?kode='.$id.'" class="btn btn-success"><i class="glyphicon glyphicon-shopping-cart icon-white"></i> SIMPAN PO &raquo;</a>
 						</div></p>
 					';
 				}
