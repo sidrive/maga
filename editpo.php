@@ -2,10 +2,10 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>Blog - Tables</title>
 
-<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap2.min.css" rel="stylesheet">
 <link href="css/datepicker3.css" rel="stylesheet">
 <link href="css/styles.css" rel="stylesheet">
 <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -21,9 +21,9 @@
 </head>
 
 <body>
-	<?php  include"nav.php"; ?>
+	<?php  //include"header.php"; ?>
 		
-	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-1 main">			
 		
 		<div class="row timbul">
 			<div class="col-lg-12 hilang">
@@ -34,17 +34,19 @@
         <thead>
             <tr>
                 <th width="30px" class="text-center">No</th>
-                <th class="text-center">Nama</th>
-                <th class="text-center">Jenis Kelamin</th>
-                <th class="text-center">Alamat</th>
-                <th class="text-center">Status</th>
+                <th class="text-center">Kode Barang</th>
+                <th class="text-center">Barcode</th>
+                <th class="text-center">Nama Barang</th>
+                <th class="text-center">Harga Satuan</th>
+				<th class="text-center">Jumlah</th>
+				<th class="text-center">Sub Total</th>
                 <th class="text-center">Opsi</th>
             </tr>
         </thead>
         <tbody>
            <?php
  include"koneksi.php";		   
-$data=$connect_db->query("select * from detail_po where id_po = 'FBMG020517-1124'");
+$data=$connect_db->query("select * from detail_po_sem where id_po = 'FBMG020517-1124'");
 $no=1;
 while($d=$data->fetch_array()){ 
 ?>
@@ -75,8 +77,16 @@ while($d=$data->fetch_array()){
 				<option value="Tidak Kawin" <?php if($d['hrg_sup'] == 'Tidak Kawin'){ echo"selected"; } ?>>Tidak Kawin</option>
 				</select>
 				</td>
+				<td>
+				<span id="editalamat<?php echo "$d[id_po]"; ?>" class="textnya"><?php echo "$d[jml_brg]"; ?></span>
+				<textarea name="alamat" cols="30" rows="10" class="form-control formnya" id="boxalamat<?php echo "$d[id_po]"; ?>" style="display:none;"><?php echo "$d[jml_brg]"; ?></textarea>
+				</td>
+				<td>
+				<span id="editalamat<?php echo "$d[id_po]"; ?>" class="textnya"><?php echo "$d[total]"; ?></span>
+				<textarea name="alamat" cols="30" rows="10" class="form-control formnya" id="boxalamat<?php echo "$d[id_po]"; ?>" style="display:none;"><?php echo "$d[total]"; ?></textarea>
+				</td>
                 <td>
-				<button data-id="<?php echo "$d[id_po]"; ?>" type="button" class="btn btn-info modaledit erow" data-toggle="modal" data-target="#myModal">Edit</button>
+				<button data-id="<?php echo "$d[kode_brg]"; ?>" type="button" class="btn btn-info modaledit erow" data-toggle="modal" data-target="#myModal">Edit</button>
 				<a id="<?php echo "$d[id_po]"; ?>" class="btn btn-success editrow erow<?php echo "$d[id_po]"; ?>">Edit</a>
 				<a id="<?php echo "$d[id_po]"; ?>" class="btn btn-success updaterow urow<?php echo "$d[id_po]"; ?>" style="display:none;">Update</a>
 						<div class="alert bg-warning crow<?php echo "$d[id_po]"; ?>" role="alert" style="display:none;">
@@ -100,7 +110,7 @@ $no++; }
 							<div class="modal-content">
 							<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 class="modal-title">Editing Data</h4>
+							<h4 class="modal-title">Edit Data PO</h4>
 							</div>
 							<div class="modal-body">
 							<div class="row fetch-data"></div>
@@ -124,7 +134,7 @@ $no++; }
 	</div><!--/.main-->
 
 	<script src="js/jquery-1.11.1.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+	<script src="js/bootstrap2.min.js"></script>
 	<script src="js/bootstrap-datepicker.js"></script>
 	<script src="js/jquery.dataTables.min.js"></script>
     <script src="js/dataTables.bootstrap.min.js"></script>
@@ -141,7 +151,7 @@ $no++; }
 			var id = $(e.relatedTarget).data('id');
 	                $.ajax({
 					type: 'post',
-					url: "edit.php",
+					url: "editpopopup.php",
 					data: 'id=' + id,
 					success: function(data){
 						$('.fetch-data').html(data);
