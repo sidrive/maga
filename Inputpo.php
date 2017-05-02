@@ -22,7 +22,7 @@
   <head>
   <!-- start: Meta -->
 	<meta charset="utf-8">
-	<title>Maga Swalayan</title> 
+	<title>Maga Swalayan - Input PO</title> 
 	<meta name="author" content="IT Maga"/>
 	<!-- end: Meta -->
 	

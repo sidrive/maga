@@ -5,7 +5,7 @@
 </head>
 
 <body>
-<div id='txtKeranjang'><b></b></div>
+
 <?php
 require_once("koneksi.php");
 $q = intval($_GET['kode']);

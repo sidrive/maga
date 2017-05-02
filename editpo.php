@@ -1,9 +1,28 @@
+<?php
+  // memanggil file koneksi.php untuk melakukan koneksi database
+ require_once("koneksi.php");
+ require_once "user.php";
+
+    // Buat object user
+    $user = new User($db);
+
+    // Jika belum login
+    if(!$user->isLoggedIn()){
+        header("location: login.php"); //Redirect ke halaman login
+    }
+
+    // Ambil data user saat ini
+    $currentUser = $user->getUser();
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>Blog - Tables</title>
+<title>Maga Swalayan - Edit Data PO</title>
+<meta name="author" content="IT Maga"/>
 
 <link href="css/bootstrap2.min.css" rel="stylesheet">
 <link href="css/datepicker3.css" rel="stylesheet">
@@ -22,6 +41,70 @@
 
 <body>
 	<?php  //include"header.php"; ?>
+	<header>
+		
+		<!--start: Container -->
+		<div class="container">
+			
+			<!--start: Row -->
+			<div class="row">
+					
+				<!--start: Logo -->
+				
+				<nav class="navbar navbar-default">
+					<div class="container-fluid">
+						<div class="navbar-header">
+						<a class="navbar-brand" href="#">
+						<img alt="Brand" src="img/logo.jpg">
+						</a>
+						</div>
+					</div>
+				</nav>
+				<!--end: Logo -->
+					
+				<!--start: Navigation -->
+				<div class="span9">
+					
+					<div class="navbar navbar-inverse">
+			    		<div class="navbar-inner">
+			          		<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+			            		<span class="icon-bar"></span>
+			            		<span class="icon-bar"></span>
+			            		<span class="icon-bar"></span>
+			          		</a>
+			          		<div class="nav-collapse collapse">
+			            		<ul class="nav">
+			              			<li class="active"><a href="index.php">PO Baru</a></li>
+			              			<li><a href="produk.php">Daftar PO</a></li>
+									<li><a href="testimoni.php">Penawaran</a></li>
+                                    <li><a href="detail_po.php">Data Barang</a></li>
+			              			<li class="dropdown">
+			                			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Login <b class="caret"></b></a>
+			                			<ul class="dropdown-menu">
+			                  				<li><a href="index.html">Admin</a></li>
+			                  				<li><a href="index.php">MD</a></li>
+			                  				<!--<li class="divider"></li>
+			                  				<li class="nav-header">Nav header</li>
+			                  				<li><a href="#">Separated link</a></li>
+			                  				<li><a href="#">One more separated link</a></li>-->
+			                			</ul>
+			              			</li>
+			            		</ul>
+			          		</div>
+			        	</div>
+			      	</div>
+					
+				</div>	
+				<!--end: Navigation -->
+					
+			</div>
+			<!--end: Row -->
+			
+		</div>
+		<!--end: Container-->			
+			
+	</header>
+	<!--end: Header-->
 		
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-1 main">			
 		
@@ -45,7 +128,7 @@
         </thead>
         <tbody>
            <?php
- include"koneksi.php";		   
+		   
 $data=$connect_db->query("select * from detail_po_sem where id_po = 'FBMG020517-1124'");
 $no=1;
 while($d=$data->fetch_array()){ 
@@ -70,7 +153,7 @@ while($d=$data->fetch_array()){
 				<textarea name="alamat" cols="30" rows="10" class="form-control formnya" id="boxalamat<?php echo "$d[id_po]"; ?>" style="display:none;"><?php echo "$d[nama_brg]"; ?></textarea>
 				</td>
                 <td>
-				<span id="editstatus<?php echo "$d[id_po]"; ?>" class="textnya"><?php echo "$d[hrg_sup]"; ?></span>	
+				<span id="editstatus<?php echo "$d[id_po]"; ?>" class="textnya"><?php echo number_format($d['hrg_sup'],2,",",".");; ?></span>	
 				<select name="status" id="boxstatus<?php echo "$d[id_po]"; ?>" style="display:none;" class="form-control formnya">
 				<?php if(empty($d['hrg_sup'])){ ?><option value=""></option><?php } ?>
 				<option value="Kawin" <?php if($d['hrg_sup'] == 'Kawin'){ echo"selected"; } ?>>Kawin</option>
@@ -82,23 +165,21 @@ while($d=$data->fetch_array()){
 				<textarea name="alamat" cols="30" rows="10" class="form-control formnya" id="boxalamat<?php echo "$d[id_po]"; ?>" style="display:none;"><?php echo "$d[jml_brg]"; ?></textarea>
 				</td>
 				<td>
-				<span id="editalamat<?php echo "$d[id_po]"; ?>" class="textnya"><?php echo "$d[total]"; ?></span>
+				<span id="editalamat<?php echo "$d[id_po]"; ?>" class="textnya"><?php echo number_format($d['total'],2,",","."); ?></span>
 				<textarea name="alamat" cols="30" rows="10" class="form-control formnya" id="boxalamat<?php echo "$d[id_po]"; ?>" style="display:none;"><?php echo "$d[total]"; ?></textarea>
 				</td>
                 <td>
 				<button data-id="<?php echo "$d[kode_brg]"; ?>" type="button" class="btn btn-info modaledit erow" data-toggle="modal" data-target="#myModal">Edit</button>
-				<a id="<?php echo "$d[id_po]"; ?>" class="btn btn-success editrow erow<?php echo "$d[id_po]"; ?>">Edit</a>
-				<a id="<?php echo "$d[id_po]"; ?>" class="btn btn-success updaterow urow<?php echo "$d[id_po]"; ?>" style="display:none;">Update</a>
-						<div class="alert bg-warning crow<?php echo "$d[id_po]"; ?>" role="alert" style="display:none;">
-					<svg class="glyph stroked cancel"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-cancel"></use></svg> HAPUS DATA !!!
-					<br /><center><button id="<?php echo "$d[id_po]"; ?>" class="btn btn-danger hapus">Hapus</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="tidak" class="btn btn-primary">Tidak</button></center>
-				</div>
 				</td>
-            </tr>
+            </tr>			
 <?php
 $no++; }
+$row=$connect_db->query("select sum(total) as totalPo from detail_po_sem ");
+$r=$row->fetch_assoc();
+$totalPo = $r['totalPo'];
 ?>		
         </tbody>
+		<tr style="background-color: #DDD;"><td colspan="5" align="right"></td><td colspan="1" align="right"><b>Total PO : </b></td><td align="right"><b>Rp. <?php echo number_format($totalPo,2,",",".") ?></b></td></td></td><td></td></tr>
     </table>
 
 					</div>

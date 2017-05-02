@@ -48,7 +48,8 @@
 								</div>
 									
 								<div class="col-md-12 widget-right">
-										<input type="submit" class="btn btn-primary btn-md pull-right" value="Update Data">
+										<input id="btnaksi" name="btnaksi" type="submit" class="btn btn-primary btn-md pull-right" value="Update Data">
+										<input id="btnaksi" name="btnaksi" type="submit" class="btn btn-danger hapus" value="Hapus Data">
 									</div>
 								<!-- Form actions -->
 							</fieldset>

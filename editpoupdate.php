@@ -1,8 +1,9 @@
 <?php
 include"koneksi.php";
 $triger=$_POST['triger'];
+$button=$_POST['btnaksi'];
 
-if($triger == 'edit2'){
+if($triger == 'edit2' && $button == 'Update Data'){
 $id=$_POST['id'];
 $jumlah=$_POST['jmlbrg'];
 $harga=$_POST['hargabrg'];
@@ -13,7 +14,18 @@ echo $harga;
 echo $totalpo;
 echo $triger;
 
+
 $res=$connect_db->query("UPDATE detail_po_sem SET jml_brg=$jumlah, total=$totalpo WHERE kode_brg=$id");
+
+if($res){
+header("location:editpo.php");
+}
+}
+
+if($triger == 'edit2' && $button == 'Hapus Data'){
+$id=$_POST['id'];
+
+$res=$connect_db->query("DELETE from detail_po_sem WHERE kode_brg=$id");
 
 if($res){
 header("location:editpo.php");
