@@ -3,7 +3,7 @@
 										include"koneksi.php";
 										$data=$connect_db->query("select * from detail_po_sem  where kode_brg='$_POST[id]' ");
 										//$data=$connect_db->query("select * from detail_po_sem  where id_po='FBMG020517-1124' ");
-										
+										echo $_POST['id'];
 										$no=1;
 										while($d=$data->fetch_array()){ 
 										?>

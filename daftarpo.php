@@ -107,13 +107,31 @@
 			
 	</header>
 	<!--end: Header-->
+	
 		
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-1 main">			
 		
 		<div class="row timbul">
 			<div class="col-lg-12 hilang">
 				<div class="panel panel-default">
-					<div class="panel-heading"><a class="btn btn-primary simpan">Tambahkan Data</a></div>
+					<div class="panel-heading">
+											
+						<form>
+						<div class="form-group">
+						<select class="form-control" name="users" style='width:200px' onchange="showPoSup(this.value)">
+						<option value="">Pilih Suplier</option>
+							<?php $sql = mysqli_query($connect_db,"SELECT * FROM SUP ORDER BY NAMA_SUP ASC");
+							while ($row = mysqli_fetch_array($sql)) { echo
+							"<option value='"; echo $row['KODE_SUP']."'>";
+							echo $row['NAMA_SUP']."</option>";
+							} ?>  
+						</select>
+						</div>
+						</form>
+						
+					</div>
+						<div id="txtData"><b>Person info will be listed here...</b></div>			
+
 					<div class="panel-body">
 					<div class="table-responsive">
 		<table width="100%" class="table table-striped table-bordered" id="tabeldata" >
@@ -222,6 +240,8 @@ $totalPo = $r['totalPo'];
 	<script src="js/bootstrap-datepicker.js"></script>
 	<script src="js/jquery.dataTables.min.js"></script>
     <script src="js/dataTables.bootstrap.min.js"></script>
+	
+
     <script>
     	$(document).ready(function() {
     		$('#tabeldata').DataTable();
@@ -244,7 +264,8 @@ $totalPo = $r['totalPo'];
 
 			});
 		 });
-	</script>	
+	</script>
+
 <!--  ############################++++++++++++++++SCRIPT AJAX EDITING ================############################  -->		
 <!--  ############################++++++++++++++++SCRIPT AJAX EDITING ================############################  -->		
 	<script type="text/javascript">
@@ -349,6 +370,32 @@ $totalPo = $r['totalPo'];
 		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
 		})
 	</script>	
+	
+	<!-- script ajax untuk memanggil data barang per suplier -->
+	<script>
+	function showPoSup(str) {
+    if (str == "") {
+        document.getElementById("txtData").innerHTML = "";
+        return;
+    } else { 
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("txtData").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET","daftarposup.php?kode="+str,true);
+        xmlhttp.send();
+    }bacaSuplier(str);
+	}
+	</script>
+	<!-- script ajax untuk memanggil data barang per suplier -->
 </body>
 
 </html>

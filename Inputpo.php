@@ -84,7 +84,6 @@
     </style>
 	
 	<!-- script ajax untuk memanggil data barang per suplier -->
-	
 	<script>
 	function showDatabarang(str) {
     if (str == "") {
@@ -103,7 +102,7 @@
                 document.getElementById("txtData").innerHTML = this.responseText;
             }
         };
-        xmlhttp.open("GET","coba.php?kode="+str,true);
+        xmlhttp.open("GET","cobaa.php?kode="+str,true);
         xmlhttp.send();
     }bacaSuplier(str);
 	}
@@ -239,7 +238,7 @@
 			          		<div class="nav-collapse collapse">
 			            		<ul class="nav">
 			              			<li class="active"><a href="index.php">PO Baru</a></li>
-			              			<li><a href="produk.php">Daftar PO</a></li>
+			              			<li><a href="daftar_po.php">Daftar PO</a></li>
 									<li><a href="testimoni.php">Penawaran</a></li>
                                     <li><a href="detail_po.php">Data Barang</a></li>
 			              			<li class="dropdown">
