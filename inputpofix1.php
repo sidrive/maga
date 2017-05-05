@@ -107,13 +107,39 @@
 			
 	</header>
 	<!--end: Header-->
+	
+	<!-- Bersihkan data pada tabel detail_po_sem -->
+		<?php $data=$connect_db->query("DELETE FROM detail_po_sem"); ?>
+	<!-- Bersihkan data pada tabel detail_po_sem -->
 		
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-1 main">			
-		
+		<div class="panel-heading">
+						<table>					
+						<form id="form_cari_suplier" action="inputpofix1.php" method="get">
+						<fieldset>
+						<div class="form-group">
+						<div class="col-md-3">
+						<th>
+						<select class="form-control" name="kode" style="width:200px">
+						<option value="">Pilih Suplier</option>
+							<?php $sql = mysqli_query($connect_db,"SELECT * FROM SUP ORDER BY NAMA_SUP ASC");
+							while ($row = mysqli_fetch_array($sql)) { echo
+							"<option value='"; echo $row['KODE_SUP']."'>";
+							echo $row['NAMA_SUP']."</option>";
+							} ?>  
+						</select>
+						</th>
+						</div>
+						</div><th><div class="col-md-2"><input id="btnaksi" name="btnaksi" type="submit" class="btn btn-primary btn-md" value="Cari"></div></th>
+						</fieldset>
+						</form>
+						</table>
+					</div>
+					<div class="row keranjang"></div>
 		<div class="row timbul">
-			<div class="col-lg-12 hilang">
+			<div class="col-lg-12">
 				<div class="panel panel-default">
-					<div class="panel-heading"><a class="btn btn-primary simpan">Tambahkan Data</a></div>
+					<div class="panel-heading">TABEL DATA BARANG</div>
 					<div class="panel-body">
 					<div class="table-responsive">
 		<table width="100%" class="table table-striped table-bordered" id="tabeldata" >
@@ -125,14 +151,13 @@
                 <th class="text-center">Nama Barang</th>
                 <th class="text-center">Harga Satuan</th>
 				<th class="text-center">Jumlah</th>
-				<th class="text-center">Sub Total</th>
                 <th class="text-center">Opsi</th>
             </tr>
         </thead>
         <tbody>
            <?php
 		   
-$data=$connect_db->query("select * from detail_po_sem where id_po = '$_GET[kode]'");
+$data=$connect_db->query("select * from brg where SUP = '$_GET[kode]'");
 $no=1;
 while($d=$data->fetch_array()){ 
 ?>
@@ -140,50 +165,41 @@ while($d=$data->fetch_array()){
             <tr>
                 <td><?php echo $no ?></td>
                 <td>
-				<span id="editkodebrg<?php echo "$d[kode_brg]"; ?>" class="textnya"><?php echo "$d[kode_brg]"; ?></span>
-                <input type="text" name="nama" value="<?php echo "$_GET[kode]"; ?>" class="form-control formnya" id="boxkodebrg<?php echo "$d[kode_brg]"; ?>" style="display:none;"/>
+				<span id="editkodebrg<?php echo "$d[KODE_BRG]"; ?>" class="textnya"><?php echo "$d[KODE_BRG]"; ?></span>
+                <input type="text" name="kodebrg" value="<?php echo "$d[KODE_BRG]"; ?>" class="form-control formnya" id="boxkodebrg<?php echo "$d[KODE_BRG]"; ?>" style="display:none;"/>
+				<input type="text" name="kodesup" value="<?php echo "$_GET[kode]"; ?>" class="form-control formnya" id="boxkodesup<?php echo "$d[KODE_BRG]"; ?>" style="display:none;"/>
 				</td>
                 <td>
-				<span id="editjkl<?php echo "$d[id_po]"; ?>" class="textnya"><?php echo "$d[barcode]"; ?></span>	
-				<select name="jkl" id="boxjkl<?php echo "$d[id_po]"; ?>" style="display:none;" class="form-control formnya">
-				<?php if(empty($d['barcode'])){ ?><option value=""></option><?php } ?>
-				<option value="Pria" <?php if($d['barcode'] == 'Pria'){ echo"selected"; } ?>>Pria</option>
-				<option value="Wanita" <?php if($d['barcode'] == 'Wanita'){ echo"selected"; } ?>>Wanita</option>
-				</select>
+				<span id="editbarcode<?php echo "$d[id_po]"; ?>" class="textnya"><?php echo "$d[BARCODE]"; ?></span>
+				<input type="text" name="barcode" value="<?php echo "$d[BARCODE]"; ?>" class="form-control formnya" id="boxbarcode<?php echo "$d[KODE_BRG]"; ?>" style="display:none;"/>
 				</td>
 				<td>
-				<span id="editalamat<?php echo "$d[id_po]"; ?>" class="textnya"><?php echo "$d[nama_brg]"; ?></span>
-				<textarea name="alamat" cols="30" rows="10" class="form-control formnya" id="boxalamat<?php echo "$d[id_po]"; ?>" style="display:none;"><?php echo "$d[nama_brg]"; ?></textarea>
+				<span id="editnamabrg<?php echo "$d[id_po]"; ?>" class="textnya"><?php echo "$d[NAMA_BRG]"; ?></span>
+				<input type="text" name="namabrg" value="<?php echo "$d[NAMA_BRG]"; ?>" class="form-control formnya" id="boxnamabrg<?php echo "$d[KODE_BRG]"; ?>" style="display:none;"/>
 				</td>
                 <td>
-				<span id="editharga<?php echo "$d[kode_brg]"; ?>" class="textnya"><?php echo number_format($d['hrg_sup'],2,",",".");; ?></span>	
-				<input readonly type="text" name="harga" value="<?php echo "$d[hrg_sup]"; ?>" class="form-control formnya" id="boxharga<?php echo "$d[kode_brg]"; ?>" style="display:none;"/>
+				<span id="editharga<?php echo "$d[KODE_BRG]"; ?>" class="textnya"><?php echo number_format($d['HRG_SUP'],2,",",".");; ?></span>	
+				<input readonly type="text" name="harga" value="<?php echo "$d[HRG_SUP]"; ?>" class="form-control formnya" id="boxharga<?php echo "$d[KODE_BRG]"; ?>" style="display:none;"/>
 				</td>
 				<td>
-				<span id="editjumlah<?php echo "$d[kode_brg]"; ?>" class="textnya"><?php echo "$d[jml_brg]"; ?></span>
-				<input type="text" name="jumlah" value="<?php echo "$d[jml_brg]"; ?>" class="form-control formnya" id="boxjumlah<?php echo "$d[kode_brg]"; ?>" style="display:none;"/>
+				<span id="editjumlah<?php echo "$d[KODE_BRG]"; ?>" class="textnya"><?php echo "$d[JML_BARANG]"; ?></span>
+				<input type="text" name="jumlah" value="<?php echo "$d[JML_BARANG]"; ?>" class="form-control formnya" id="boxjumlah<?php echo "$d[KODE_BRG]"; ?>" style="display:none;"/>
 				</td>
 				<td>
-				<span id="editalamat<?php echo "$d[id_po]"; ?>" class="textnya"><?php echo number_format($d['total'],2,",","."); ?></span>
-				<textarea name="alamat" cols="30" rows="10" class="form-control formnya" id="boxalamat<?php echo "$d[id_po]"; ?>" style="display:none;"><?php echo "$d[total]"; ?></textarea>
-				</td>
-                <td>
-				<button data-id="<?php echo "$d[kode_brg]"; ?>" type="button" class="btn btn-info modaledit erow" data-toggle="modal" data-target="#myModal">Edit</button>
-				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-success editrow erow<?php echo "$d[kode_brg]"; ?>">Edit</a>
-				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-success updaterow urow<?php echo "$d[kode_brg]"; ?>" style="display:none;">Update</a>
-						<div class="alert bg-warning crow<?php echo "$d[kode_brg]"; ?>" role="alert" style="display:none;">
+				
+				<a id="<?php echo "$d[KODE_BRG]"; ?>" class="btn btn-success editrow erow<?php echo "$d[KODE_BRG]"; ?>">Tambah</a>
+				<a id="<?php echo "$d[KODE_BRG]"; ?>" class="btn btn-danger updaterow urow<?php echo "$d[KODE_BRG]"; ?>" style="display:none;">Simpan</a>
+						<div class="alert bg-warning crow<?php echo "$d[KODE_BRG]"; ?>" role="alert" style="display:none;">
 					<svg class="glyph stroked cancel"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-cancel"></use></svg> HAPUS DATA !!!
-					<br /><center><button id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-danger hapus">Hapus</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="tidak" class="btn btn-primary">Tidak</button></center>
+					<br /><center><button id="<?php echo "$d[KODE_BRG]"; ?>" class="btn btn-danger hapus">Hapus</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="tidak" class="btn btn-primary">Tidak</button></center>
 				</td>
-            </tr>			
+            </tr>
 <?php
 $no++; }
-$row=$connect_db->query("select sum(total) as totalPo from detail_po_sem ");
-$r=$row->fetch_assoc();
-$totalPo = $r['totalPo'];
-?>		
+
+?>				
         </tbody>
-		<tr style="background-color: #DDD;"><td colspan="5" align="right"></td><td colspan="1" align="right"><b>Total PO : </b></td><td align="right"><b>Rp. <?php echo number_format($totalPo,2,",",".") ?></b></td></td></td><td></td></tr>
+		
     </table>
 					</div>
 					</div>
@@ -256,28 +272,29 @@ $totalPo = $r['totalPo'];
 	  $(".urow"+id).show('slow');
 	  $("#editjumlah"+id).hide('slow');
 	  $("#boxjumlah"+id).show('slow');
-	  $("#editharga"+id).hide('slow');
-	  $("#boxharga"+id).show('slow');
 	    });
 	  $(".updaterow").click(function(){
 	  var id = $(this).attr("id");
+	  var kodesup = $("input#boxkodesup"+id).val();
+	  var barcode = $("input#boxbarcode"+id).val();
+	  var namabrg = $("input#boxnamabrg"+id).val();
 	  var jumlah = $("input#boxjumlah"+id).val();
 	  var harga = $("input#boxharga"+id).val();
 	  var kode = $("input#boxkodebrg"+id).val();
 	  var triger = "edit";
-	  var btnaksi = "update";
-	  if( jumlah == "" ){
+	  var btnaksi = "tambah";
+	  if( jumlah == "" || jumlah <= 0){
 	  $('#errorpop').show('slow');
 	  }else{
 	                $.ajax({
 					type: "POST",
-					url: "editpoupdate.php",
+					url: "inputpoproses.php",
 					dataType: 'json',
-					data: 'id=' + id + '&jumlah=' + jumlah + '&harga=' + harga + '&triger=' + triger + '&btnaksi=' + btnaksi,
+					data: 'id=' + id + '&kodesup=' + kodesup + '&barcode=' + barcode + '&namabrg=' + namabrg + '&jumlah=' + jumlah + '&harga=' + harga + '&triger=' + triger + '&btnaksi=' + btnaksi,
 					success: function(html){
 						$('#successpop').show('slow');
-						$('.hilang').hide('slow');
-						$('.timbul').load('timbul2.php?kode='+kode);
+						
+						$('.keranjang').load('keranjangpo.php');
 					},	
 					error: function(){
 						$('#gagalpop').show('slow');

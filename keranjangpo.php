@@ -8,7 +8,7 @@
     </script>	
 			<div class="col-lg-12 hilang">
 				<div class="panel panel-default">
-					<div class="panel-heading"><a class="btn btn-primary simpan">Tambahkan Data</a></div>
+					<div class="panel-heading">TABEL DETAIL PO</div>
 					<div class="panel-body">
 					<div class="table-responsive">
 		<table width="100%" class="table table-striped table-bordered" id="tabeldata" >
@@ -27,7 +27,7 @@
         <tbody>
            <?php
 		   include"koneksi.php";	
-$data=$connect_db->query("select * from detail_po_sem where id_po = '$_GET[kode]'");
+$data=$connect_db->query("select * from detail_po_sem");
 $no=1;
 while($d=$data->fetch_array()){ 
 ?>
@@ -64,8 +64,8 @@ while($d=$data->fetch_array()){
 				</td>
                 <td>
 				<button data-id="<?php echo "$d[kode_brg]"; ?>" type="button" class="btn btn-info modaledit erow" data-toggle="modal" data-target="#myModal">Edit</button>
-				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-success editrow erow<?php echo "$d[kode_brg]"; ?>">Edit</a>
-				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-success updaterow urow<?php echo "$d[kode_brg]"; ?>" style="display:none;">Update</a>
+				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-success editpo perow<?php echo "$d[kode_brg]"; ?>">Edit</a>
+				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-success updatepo purow<?php echo "$d[kode_brg]"; ?>" style="display:none;">Update</a>
 						<div class="alert bg-warning crow<?php echo "$d[kode_brg]"; ?>" role="alert" style="display:none;">
 					<svg class="glyph stroked cancel"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-cancel"></use></svg> HAPUS DATA !!!
 					<br /><center><button id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-danger hapus">Hapus</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="tidak" class="btn btn-primary">Tidak</button></center>
@@ -136,34 +136,33 @@ $totalPo = $r['totalPo'];
 <!--  ############################++++++++++++++++SCRIPT AJAX EDITING ================############################  -->		
 	<script type="text/javascript">
 	$(document).ready(function(){	
-	  $(".editrow").click(function(){
+	  $(".editpo").click(function(){
 	  var id = $(this).attr("id");
-	  $(".erow"+id).hide('slow');
-	  $(".urow"+id).show('slow');
+	  $(".perow"+id).hide('slow');
+	  $(".purow"+id).show('slow');
 	  $("#editjumlah"+id).hide('slow');
 	  $("#boxjumlah"+id).show('slow');
 	  $("#editharga"+id).hide('slow');
-	  $("#boxharga"+id).show('slow');
 	    });
-	  $(".updaterow").click(function(){
+	  $(".updatepo").click(function(){
 	  var id = $(this).attr("id");
 	  var jumlah = $("input#boxjumlah"+id).val();
 	  var harga = $("input#boxharga"+id).val();
 	  var kode = $("input#boxkodebrg"+id).val();
 	  var triger = "edit";
 	  var btnaksi = "update";
-	  if( jumlah == "" ){
+	  if( jumlah == "" || jumlah <= 0){
 	  $('#errorpop').show('slow');
 	  }else{
 	                $.ajax({
 					type: "POST",
-					url: "editpoupdate.php",
+					url: "updatepoproses.php",
 					dataType: 'json',
 					data: 'id=' + id + '&jumlah=' + jumlah + '&harga=' + harga + '&triger=' + triger + '&btnaksi=' + btnaksi,
 					success: function(html){
 						$('#successpop').show('slow');
 						$('.hilang').hide('slow');
-						$('.timbul').load('timbul2.php?kode='+kode);
+						$('.keranjang').load('keranjangpo.php');
 					},	
 					error: function(){
 						$('#gagalpop').show('slow');
