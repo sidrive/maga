@@ -94,7 +94,7 @@ $val = intval($_GET['jml']);
 		<input type='number_format' style='width:25px' name='jmledit' /> 
 		<input type='number_format' style='width:25px' name='kode_brg' value='$data1[kode_brg]' hidden />
 		<input type='number_format' style='width:25px' name='jumlah' value='$data1[jml_brg]' hidden />
-		
+		<button type='button' onclick='tambah(formtambah.kode_brg.value,formtambah.jmledit.value);'>Tambah</button>
 		</form></td>";
 		echo "<td><input type='number_format' style='width:25px' name='jumlah' value='$data1[jml_brg]' readonly /></td>";
 		echo "<td>$data1[total]</td>";

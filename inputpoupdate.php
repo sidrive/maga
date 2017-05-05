@@ -2,13 +2,17 @@
 include"koneksi.php";
 $triger=$_POST['triger'];
 $button=$_POST['btnaksi'];
+$kode=$_POST['kodesup'];
 
 if($triger == 'edit2' && $button == 'Update Data'){
-$id=$_POST['id'];
-$idpo=$_POST['id_po'];
+$kodebrg=$_POST['id'];
+$id = 'FBMG'.date('dmy').'-'.$_POST['kodesup'];
+$barcode=$_POST['barcode'];
+$namabrg=$_POST['namabrg'];
 $jumlah=$_POST['jmlbrg'];
 $harga=$_POST['hargabrg'];
 $totalpo = $harga * $jumlah;
+$edit = date('Y-m-d');
 echo $id;
 echo $jumlah;
 echo $harga;
@@ -16,10 +20,11 @@ echo $totalpo;
 echo $triger;
 
 
-$res=$connect_db->query("UPDATE detail_po_sem SET jml_brg=$jumlah, total=$totalpo WHERE kode_brg=$id");
+$res=$connect_db->query("INSERT INTO detail_po_sem (id_po, kode_brg, barcode, nama_brg, hrg_sup, jml_brg, total, tgl_edit)
+					VALUES ('$id', '$kodebrg', '$barcode', '$namabrg', $harga, $jumlah, $totalpo, '$edit')");
 
 if($res){
-header("location:editpo.php?kode=$idpo");
+header("location:inputpofix.php?kode=$kode");
 }
 }
 
@@ -29,10 +34,10 @@ $id=$_POST['id'];
 $res=$connect_db->query("DELETE from detail_po_sem WHERE kode_brg=$id");
 
 if($res){
-header("location:editpo.php?kode=$idpo");
+header("location:daftarpopo.php");
 }
 }
-
+/*
 if($triger == 'del'){
 $id=$_POST['id'];
 $connect_db->query("delete from user where user_id='$id' ");
@@ -47,14 +52,16 @@ echo json_encode(array());
 
 if($triger == 'edit'){
 $id=$_POST['id'];
-$jumlah=$_POST['jumlah'];
-$harga=$_POST['harga'];
-$totalpo = $harga * $jumlah;
-$res=$connect_db->query("UPDATE detail_po_sem SET jml_brg=$jumlah, total=$totalpo WHERE kode_brg=$id");
+$nama=$_POST['nama'];
+$jekel=$_POST['jekel'];
+$alamat=$_POST['alamat'];
+$status=$_POST['status'];
+
+$res=$connect_db->query("update data_test set data_name='$nama',data_jkl='$jekel',data_alamat='$alamat',data_status='$status' where data_id='$id' ");
 
 if($res){
 echo json_encode(array());
 }
 }
-
+*/
 ?>

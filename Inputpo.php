@@ -31,6 +31,7 @@
 	<!-- end: Mobile Specific -->
 	
 	 <!-- start: CSS --> 
+	 
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
@@ -102,7 +103,7 @@
                 document.getElementById("txtData").innerHTML = this.responseText;
             }
         };
-        xmlhttp.open("GET","cobaa.php?kode="+str,true);
+        xmlhttp.open("GET","coba.php?kode="+str,true);
         xmlhttp.send();
     }bacaSuplier(str);
 	}
@@ -414,7 +415,35 @@
 		
 	</div>	
 	<!-- end: Copyright -->
+							<div id="myMod" class="modal fade" role="dialog">
+							<div class="modal-dialog">
+							<div class="modal-content">
+							<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Edit Data PO</h4>
+							</div>
+							<div class="modal-body">
+							<div class="row fetch-data"></div>
+							</div>
+							</div>
+							</div>
+							</div>
+	<script type="text/javascript">
+	$(document).ready(function(){	
+	  $("#myMod").on('show.bs.modal', function(e){		
+			var id = $(e.relatedTarget).data('id');
+	                $.ajax({
+					type: 'post',
+					url: "popup.php",
+					data: 'id=' + id,
+					success: function(data){
+						$('.fetch-data').html(data);
+					}
+					});
 
+			});
+		 });
+	</script>
 <!-- start: Java Script -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="js/jquery-1.8.2.js"></script>

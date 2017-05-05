@@ -132,7 +132,7 @@
         <tbody>
            <?php
 		   
-$data=$connect_db->query("select * from detail_po_sem where id_po = 'FBMG020517-1124'");
+$data=$connect_db->query("select * from detail_po_sem where id_po = '$_GET[kode]'");
 $no=1;
 while($d=$data->fetch_array()){ 
 ?>
@@ -140,8 +140,8 @@ while($d=$data->fetch_array()){
             <tr>
                 <td><?php echo $no ?></td>
                 <td>
-				<span id="editnama<?php echo "$d[id_po]"; ?>" class="textnya"><?php echo "$d[kode_brg]"; ?></span>
-                <input type="text" name="nama" value="<?php echo "$d[kode_brg]"; ?>" class="form-control formnya" id="boxnama<?php echo "$d[id_po]"; ?>" style="display:none;"/>
+				<span id="editkodebrg<?php echo "$d[kode_brg]"; ?>" class="textnya"><?php echo "$d[kode_brg]"; ?></span>
+                <input type="text" name="nama" value="<?php echo "$d[kode_brg]"; ?>" class="form-control formnya" id="boxkodebrg<?php echo "$d[kode_brg]"; ?>" style="display:none;"/>
 				</td>
                 <td>
 				<span id="editjkl<?php echo "$d[id_po]"; ?>" class="textnya"><?php echo "$d[barcode]"; ?></span>	
@@ -156,16 +156,12 @@ while($d=$data->fetch_array()){
 				<textarea name="alamat" cols="30" rows="10" class="form-control formnya" id="boxalamat<?php echo "$d[id_po]"; ?>" style="display:none;"><?php echo "$d[nama_brg]"; ?></textarea>
 				</td>
                 <td>
-				<span id="editstatus<?php echo "$d[id_po]"; ?>" class="textnya"><?php echo number_format($d['hrg_sup'],2,",",".");; ?></span>	
-				<select name="status" id="boxstatus<?php echo "$d[id_po]"; ?>" style="display:none;" class="form-control formnya">
-				<?php if(empty($d['hrg_sup'])){ ?><option value=""></option><?php } ?>
-				<option value="Kawin" <?php if($d['hrg_sup'] == 'Kawin'){ echo"selected"; } ?>>Kawin</option>
-				<option value="Tidak Kawin" <?php if($d['hrg_sup'] == 'Tidak Kawin'){ echo"selected"; } ?>>Tidak Kawin</option>
-				</select>
+				<span id="editharga<?php echo "$d[kode_brg]"; ?>" class="textnya"><?php echo number_format($d['hrg_sup'],2,",",".");; ?></span>	
+				<input readonly type="text" name="harga" value="<?php echo "$d[hrg_sup]"; ?>" class="form-control formnya" id="boxharga<?php echo "$d[kode_brg]"; ?>" style="display:none;"/>
 				</td>
 				<td>
-				<span id="editalamat<?php echo "$d[id_po]"; ?>" class="textnya"><?php echo "$d[jml_brg]"; ?></span>
-				<textarea name="alamat" cols="30" rows="10" class="form-control formnya" id="boxalamat<?php echo "$d[id_po]"; ?>" style="display:none;"><?php echo "$d[jml_brg]"; ?></textarea>
+				<span id="editjumlah<?php echo "$d[kode_brg]"; ?>" class="textnya"><?php echo "$d[jml_brg]"; ?></span>
+				<input type="text" name="jumlah" value="<?php echo "$d[jml_brg]"; ?>" class="form-control formnya" id="boxjumlah<?php echo "$d[kode_brg]"; ?>" style="display:none;"/>
 				</td>
 				<td>
 				<span id="editalamat<?php echo "$d[id_po]"; ?>" class="textnya"><?php echo number_format($d['total'],2,",","."); ?></span>
@@ -173,6 +169,11 @@ while($d=$data->fetch_array()){
 				</td>
                 <td>
 				<button data-id="<?php echo "$d[kode_brg]"; ?>" type="button" class="btn btn-info modaledit erow" data-toggle="modal" data-target="#myModal">Edit</button>
+				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-success editrow erow<?php echo "$d[kode_brg]"; ?>">Edit</a>
+				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-success updaterow urow<?php echo "$d[kode_brg]"; ?>" style="display:none;">Update</a>
+						<div class="alert bg-warning crow<?php echo "$d[kode_brg]"; ?>" role="alert" style="display:none;">
+					<svg class="glyph stroked cancel"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-cancel"></use></svg> HAPUS DATA !!!
+					<br /><center><button id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-danger hapus">Hapus</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="tidak" class="btn btn-primary">Tidak</button></center>
 				</td>
             </tr>			
 <?php
@@ -253,30 +254,24 @@ $totalPo = $r['totalPo'];
 	  var id = $(this).attr("id");
 	  $(".erow"+id).hide('slow');
 	  $(".urow"+id).show('slow');
-	  $("#editnama"+id).hide('slow');
-	  $("#editjkl"+id).hide('slow');
-	  $("#editalamat"+id).hide('slow');
-	  $("#editstatus"+id).hide('slow');
-	  $("#boxnama"+id).show('slow');
-	  $("#boxjkl"+id).show('slow');
-	  $("#boxalamat"+id).show('slow');
-	  $("#boxstatus"+id).show('slow');
-	  });
+	  $("#editjumlah"+id).hide('slow');
+	  $("#boxjumlah"+id).show('slow');
+	  $("#editharga"+id).hide('slow');
+	  $("#boxharga"+id).show('slow');
+	    });
 	  $(".updaterow").click(function(){
 	  var id = $(this).attr("id");
-	  var nama = $("input#boxnama"+id).val();
-	  var jekel =  $("select#boxjkl"+id).val();
-	  var alamat = $("textarea#boxalamat"+id).val();
-	  var status =  $("select#boxstatus"+id).val();
+	  var jumlah = $("input#boxjumlah"+id).val();
+	  var harga = $("input#boxharga"+id).val();
 	  var triger = "edit";
-	  if( nama == "" ){
+	  if( jumlah == "" ){
 	  $('#errorpop').show('slow');
 	  }else{
 	                $.ajax({
 					type: "POST",
-					url: "pros.php",
+					url: "editpoupdate.php",
 					dataType: 'json',
-					data: 'id=' + id + '&nama=' + nama + '&jekel=' + jekel+ '&alamat=' + alamat + '&status=' + status + '&triger=' + triger,
+					data: 'id=' + id + '&jumlah=' + jumlah + '&harga=' + harga + '&triger=' + triger,
 					success: function(html){
 						$('#successpop').show('slow');
 						$('.hilang').hide('slow');
