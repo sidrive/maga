@@ -170,11 +170,11 @@ while($d=$data->fetch_array()){
 				<input type="text" name="kodesup" value="<?php echo "$_GET[kode]"; ?>" class="form-control formnya" id="boxkodesup<?php echo "$d[KODE_BRG]"; ?>" style="display:none;"/>
 				</td>
                 <td>
-				<span id="editbarcode<?php echo "$d[id_po]"; ?>" class="textnya"><?php echo "$d[BARCODE]"; ?></span>
+				<span id="editbarcode<?php echo "$d[KODE_BRG]"; ?>" class="textnya"><?php echo "$d[BARCODE]"; ?></span>
 				<input type="text" name="barcode" value="<?php echo "$d[BARCODE]"; ?>" class="form-control formnya" id="boxbarcode<?php echo "$d[KODE_BRG]"; ?>" style="display:none;"/>
 				</td>
 				<td>
-				<span id="editnamabrg<?php echo "$d[id_po]"; ?>" class="textnya"><?php echo "$d[NAMA_BRG]"; ?></span>
+				<span id="editnamabrg<?php echo "$d[KODE_BRG]"; ?>" class="textnya"><?php echo "$d[NAMA_BRG]"; ?></span>
 				<input type="text" name="namabrg" value="<?php echo "$d[NAMA_BRG]"; ?>" class="form-control formnya" id="boxnamabrg<?php echo "$d[KODE_BRG]"; ?>" style="display:none;"/>
 				</td>
                 <td>

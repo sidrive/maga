@@ -99,9 +99,11 @@ $id = $_GET['kode'];
 					VALUES ('$id','$kode_sup','$edit',$rowTotal[total_po], '$status_maga', '$status_suplier')";
 					$resultSimpanPo = mysqli_query($connect_db, $simpanpo);
 					
-		$hapuspo = "DELETE from detail_po_sem where id_po = '$id'";
-					$resultSimpanPo = mysqli_query($connect_db, $simpanpo);			
-	  
+	/* Bersihkan data pada tabel detail_po_sem */
+		$data=$connect_db->query("DELETE FROM detail_po_sem");
+	/* Bersihkan data pada tabel detail_po_sem */		
+	
+	 /* Mengalihkan ke index.php */  header("location:index.php");
         ?>
 </body>
 </html>

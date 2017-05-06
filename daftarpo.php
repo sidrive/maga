@@ -110,72 +110,48 @@
 	
 		
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-1 main">			
-		
+		<div class="container">
+					<div class="form-group row">
+					<form action="daftarpo.php">
+						<div class="col-xs-3">Tanggal Awal
+						<input class="form-control" type="date" height="20px" id="tglawal">
+						</div>
+						<div class="col-xs-3">Tanggal Akhir
+						<input  class="form-control" type="date" height="20px" id="tglakhir">
+						</div>
+						<br><a id="btncari" class="btn btn-success btncari">Tampilkan</a>
+					</form>
+					</div>
+		</div>
 		<div class="row timbul">
 			<div class="col-lg-12 hilang">
 				<div class="panel panel-default">
-					<div class="panel-heading">
-						<table>					
-						<form id="form_cari_suplier" action="daftarpo.php" method="get">
-						<fieldset>
-						<div class="form-group">
-						<div class="col-md-3">
-						<th>
-						<select class="form-control" name="kode" style="width:200px">
-						<option value="">Pilih Suplier</option>
-							<?php $sql = mysqli_query($connect_db,"SELECT * FROM SUP ORDER BY NAMA_SUP ASC");
-							while ($row = mysqli_fetch_array($sql)) { echo
-							"<option value='"; echo $row['KODE_SUP']."'>";
-							echo $row['NAMA_SUP']."</option>";
-							} ?>  
-						</select>
-						</th>
-						</div>
-						</div><th><div class="col-md-2"><input id="btnaksi" name="btnaksi" type="submit" class="btn btn-primary btn-md" value="Cari"></div></th>
-						</fieldset>
-						</form>
-						</table>
-					</div>
-						<div class="panel-body">
-						<table width="30px" class="table table-striped table-bordered" id="tabelpo" >
-							<th width="250px" class="text-center">Jumlah Barang PO</th>
-							<th width="230px" class="text-center">Total Harga</th>
-							<th class="text-center">Opsi</th>
-							<tr>
-							<td align="center"><?php $sql = mysqli_query($connect_db,"SELECT count(id_po) as jumlahpo from detail_po_sem");
-							$row = mysqli_fetch_assoc($sql);
-							echo $row['jumlahpo'];
-							?></td>
-							<td align="right"><b><?php $sql = mysqli_query($connect_db,"SELECT sum(total) as totalpo from detail_po_sem");
-							$row = mysqli_fetch_assoc($sql);
-							echo "Rp. ".number_format($row['totalpo'],2,",",".");
-							?></b></td>
-							<td><?php $sql = mysqli_query($connect_db,"SELECT * from detail_po_sem");
-							$row = mysqli_fetch_assoc($sql);
-							?>
-							<button type="button" class="btn btn-info modaledit erow" onclick="window.location='editpo.php?kode=<?php echo $row['id_po']?>';">Edit PO</button></td>
-							</tr>
-						</table>
-						</div>
-
+					
+					<div class="panel-heading"></div>	
 					<div class="panel-body">
 					<div class="table-responsive">
 		<table width="100%" class="table table-striped table-bordered" id="tabeldata" >
         <thead>
             <tr>
                 <th width="30px" class="text-center">No</th>
-                <th class="text-center">Kode Barang</th>
-                <th class="text-center">Barcode</th>
-                <th class="text-center">Nama Barang</th>
-                <th class="text-center">Harga Satuan</th>
-				<th class="text-center">Jumlah</th>
+                <th class="text-center">ID PO</th>
+                <th class="text-center">Suplier</th>
+                <th class="text-center">Tanggal Dibuat</th>
+                <th class="text-center">Total Harga PO</th>
 				<th class="text-center">Opsi</th>
             </tr>
         </thead>
         <tbody>
            <?php
+if(isset($_GET['tglawal'])){
+	$tglawal = $_GET['tglawal'];
+	$tglakhir = $_GET['tglakhir'];
+	$query = "SELECT * FROM po WHERE status_suplier = 'N' AND tgl_po BETWEEN '$tglawal' AND '$tglakhir'";	
+}else{
+	$query = "SELECT * FROM po WHERE status_suplier = 'N'";
+}
 		   
-$data=$connect_db->query("select * from brg where SUP = '$_GET[kode]'");
+$data=$connect_db->query($query);
 $no=1;
 while($d=$data->fetch_array()){ 
 	
@@ -184,42 +160,31 @@ while($d=$data->fetch_array()){
             <tr>
                 <td><?php echo $no ?></td>
                 <td>
-				<span id="editnama<?php echo "$d[KODE_BRG]"; ?>" class="textnya"><?php echo "$d[KODE_BRG]"; ?></span>
-                <input type="text" name="nama" value="<?php echo "$d[KODE_BRG]"; ?>" class="form-control formnya" id="boxnama<?php echo "$d[KODE_BRG]"; ?>" style="display:none;"/>
+				<span id="editkodebrg<?php echo "$d[id_po]"; ?>" class="textnya"><?php echo "$d[id_po]"; ?></span>
+                <input type="text" name="kodebrg" value="<?php echo "$d[id_po]"; ?>" class="form-control formnya" id="boxkodebrg<?php echo "$d[id_po]"; ?>" style="display:none;"/>
+				<input type="text" name="kodesup" value="<?php echo "$_GET[kode]"; ?>" class="form-control formnya" id="boxkodesup<?php echo "$d[id_po]"; ?>" style="display:none;"/>
 				</td>
                 <td>
-				<span id="editjkl<?php echo "$d[KODE_BRG]"; ?>" class="textnya"><?php echo "$d[BARCODE]"; ?></span>	
-				<select name="jkl" id="boxjkl<?php echo "$d[KODE_BRG]"; ?>" style="display:none;" class="form-control formnya">
-				<?php if(empty($d['BARCODE'])){ ?><option value=""></option><?php } ?>
-				<option value="Pria" <?php if($d['BARCODE'] == 'Pria'){ echo"selected"; } ?>>Pria</option>
-				<option value="Wanita" <?php if($d['BARCODE'] == 'Wanita'){ echo"selected"; } ?>>Wanita</option>
-				</select>
+				<span id="editbarcode<?php echo "$d[id_po]"; ?>" class="textnya"><?php 
+				$data1=$connect_db->query("select NAMA_SUP from sup where KODE_SUP = $d[kode_sup]");
+				$row=$data1->fetch_assoc();
+				echo "$row[NAMA_SUP]";?></span>
+				<input type="text" name="barcode" value="<?php echo "$d[kode_sup]"; ?>" class="form-control formnya" id="boxbarcode<?php echo "$d[id_po]"; ?>" style="display:none;"/>
 				</td>
 				<td>
-				<span id="editalamat<?php echo "$d[KODE_BRG]"; ?>" class="textnya"><?php echo "$d[NAMA_BRG]"; ?></span>
-				<textarea name="alamat" cols="30" rows="10" class="form-control formnya" id="boxalamat<?php echo "$d[KODE_BRG]"; ?>" style="display:none;"><?php echo "$d[NAMA_BRG]"; ?></textarea>
+				<span id="editnamabrg<?php echo "$d[id_po]"; ?>" class="textnya"><?php $tanggal = date('d F Y',strtotime($d['tgl_po']));echo $tanggal; ?></span>
+				<input type="text" name="namabrg" value="<?php echo "$d[tgl_po]"; ?>" class="form-control formnya" id="boxnamabrg<?php echo "$d[id_po]"; ?>" style="display:none;"/>
 				</td>
-                <td>
-				<span id="editstatus<?php echo "$d[KODE_BRG]"; ?>" class="textnya"><?php echo number_format($d['HRG_SUP'],2,",",".");; ?></span>	
-				<select name="status" id="boxstatus<?php echo "$d[KODE_BRG]"; ?>" style="display:none;" class="form-control formnya">
-				<?php if(empty($d['HRG_SUP'])){ ?><option value=""></option><?php } ?>
-				<option value="Kawin" <?php if($d['HRG_SUP'] == 'Kawin'){ echo"selected"; } ?>>Kawin</option>
-				<option value="Tidak Kawin" <?php if($d['HRG_SUP'] == 'Tidak Kawin'){ echo"selected"; } ?>>Tidak Kawin</option>
-				</select>
+                <td align="right">
+				<span id="editharga<?php echo "$d[id_po]"; ?>" class="textnya"><?php echo "Rp. ".number_format($d['total'],2,",",".");; ?></span>	
+				<input readonly type="text" name="harga" value="<?php echo "$d[HRG_SUP]"; ?>" class="form-control formnya" id="boxharga<?php echo "$d[id_po]"; ?>" style="display:none;"/>
 				</td>
-				<td>
-				<span id="editalamat<?php echo "$d[KODE_BRG]"; ?>" class="textnya"><?php echo "$d[JML_BARANG]"; ?></span>
-				<textarea name="alamat" cols="30" rows="10" class="form-control formnya" id="boxalamat<?php echo "$d[KODE_BRG]"; ?>" style="display:none;"><?php echo "$d[JML_BARANG]"; ?></textarea>
+				<td align="center">
+				<button type="button" class="btn btn-info modaledit erow" onclick="window.location='editposup.php?kode=<?php echo $d['id_po']?>';">Edit PO</button>
 				</td>
-				<td>
-				<button data-id="<?php echo "$d[KODE_BRG]"; ?>" data-po="<?php echo "$_GET[kode]"; ?>" type="button" class="btn btn-info modaledit erow" data-toggle="modal" data-target="#myMod">Tambah</button>
-				</td>
-            </tr>			
+            </tr>
 <?php
 $no++; }
-$row=$connect_db->query("select sum(total) as totalPo from detail_po_sem ");
-$r=$row->fetch_assoc();
-$totalPo = $r['totalPo'];
 ?>		
         </tbody>
     </table>
@@ -308,38 +273,23 @@ $totalPo = $r['totalPo'];
 <!--  ############################++++++++++++++++SCRIPT AJAX EDITING ================############################  -->		
 	<script type="text/javascript">
 	$(document).ready(function(){	
-	  $(".editrow").click(function(){
+	  $(".btncari").click(function(){
 	  var id = $(this).attr("id");
-	  $(".erow"+id).hide('slow');
-	  $(".urow"+id).show('slow');
-	  $("#editnama"+id).hide('slow');
-	  $("#editjkl"+id).hide('slow');
-	  $("#editalamat"+id).hide('slow');
-	  $("#editstatus"+id).hide('slow');
-	  $("#boxnama"+id).show('slow');
-	  $("#boxjkl"+id).show('slow');
-	  $("#boxalamat"+id).show('slow');
-	  $("#boxstatus"+id).show('slow');
-	  });
-	  $(".updaterow").click(function(){
-	  var id = $(this).attr("id");
-	  var nama = $("input#boxnama"+id).val();
-	  var jekel =  $("select#boxjkl"+id).val();
-	  var alamat = $("textarea#boxalamat"+id).val();
-	  var status =  $("select#boxstatus"+id).val();
-	  var triger = "edit";
-	  if( nama == "" ){
+	  var tglawal = $("input#tglawal").val();
+	  var tglakhir =  $("input#tglakhir").val();
+	  var triger = "tampil";
+	  if( tglawal == "" && tglakhir == ""){
 	  $('#errorpop').show('slow');
 	  }else{
 	                $.ajax({
 					type: "POST",
-					url: "pros.php",
+					url: "daftarpoproses.php",
 					dataType: 'json',
-					data: 'id=' + id + '&nama=' + nama + '&jekel=' + jekel+ '&alamat=' + alamat + '&status=' + status + '&triger=' + triger,
+					data: 'triger=' + triger + '&tglawal=' + tglawal + '&tglakhir=' + tglakhir,
 					success: function(html){
 						$('#successpop').show('slow');
 						$('.hilang').hide('slow');
-						$('.timbul').load('timbul2.php');
+						$('.timbul').load('daftarpo1.php?tglawal='+ tglawal + '&tglakhir=' + tglakhir);
 					},	
 					error: function(){
 						$('#gagalpop').show('slow');

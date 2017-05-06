@@ -116,7 +116,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<table>					
-						<form id="form_cari_suplier" action="daftarpo.php" method="get">
+						<form id="form_cari_suplier" action="inputpofix.php" method="get">
 						<fieldset>
 						<div class="form-group">
 						<div class="col-md-3">

@@ -42,70 +42,41 @@
 <body>
 	<?php  //include"header.php"; ?>
 	<header>
-		
-		<!--start: Container -->
-		<div class="container">
-			
-			<!--start: Row -->
-			<div class="row">
-					
-				<!--start: Logo -->
-				
-				<nav class="navbar navbar-default">
-					<div class="container-fluid">
-						<div class="navbar-header">
-						<a class="navbar-brand" href="#">
-						<img alt="logo" src="img/logo1.png">
-						</a>
-						</div>
-					
-				
-				<!--end: Logo -->
-					
-				<!--start: Navigation -->
-				
-					
-					
-			    		<div class="navbar-inner">
-			          		<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-			            		<span class="icon-bar"></span>
-			            		<span class="icon-bar"></span>
-			            		<span class="icon-bar"></span>
-			          		</a>
-			          		<div class="nav-collapse collapse">
-			            		<ul class="nav">
-			              			<li class="active"><a href="index.php">PO Baru</a></li>
-			              			<li><a href="produk.php">Daftar PO</a></li>
-									<li><a href="testimoni.php">Penawaran</a></li>
-                                    <li><a href="detail_po.php">Data Barang</a></li>
-			              			<li class="dropdown">
-			                			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Login <b class="caret"></b></a>
-			                			<ul class="dropdown-menu">
-			                  				<li><a href="index.html">Admin</a></li>
-			                  				<li><a href="index.php">MD</a></li>
-			                  				<!--<li class="divider"></li>
-			                  				<li class="nav-header">Nav header</li>
-			                  				<li><a href="#">Separated link</a></li>
-			                  				<li><a href="#">One more separated link</a></li>-->
-			                			</ul>
-			              			</li>
-			            		</ul>
-			          		</div>
-			        	</div>
-			      	
-					
-				
-				<!--end: Navigation -->
-				
-				</div>
-					</nav>
-			</div>
-			<!--end: Row -->
-			
-		</div>
-		<!--end: Container-->			
-			
-	</header>
+<div class="container">
+<div class="row">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#"><img alt="logo" src="img/logo12.png"></a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Daftar PO<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">PO Baru</a></li>
+            <li><a href="#">PO apa</a></li>
+            <li><a href="#">PO Selesai</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Penawaran</a></li>
+        <li><a href="#">Admin</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</div>
+</div>
+</header>
 	<!--end: Header-->
 		
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-1 main">			
@@ -113,7 +84,7 @@
 		<div class="row timbul">
 			<div class="col-lg-12 hilang">
 				<div class="panel panel-default">
-					<div class="panel-heading"><a class="btn btn-primary simpan">Tambahkan Data</a></div>
+					<div class="panel-heading"></div>
 					<div class="panel-body">
 					<div class="table-responsive">
 		<table width="100%" class="table table-striped table-bordered" id="tabeldata" >
@@ -168,9 +139,10 @@ while($d=$data->fetch_array()){
 				<textarea name="alamat" cols="30" rows="10" class="form-control formnya" id="boxalamat<?php echo "$d[id_po]"; ?>" style="display:none;"><?php echo "$d[total]"; ?></textarea>
 				</td>
                 <td>
-				<button data-id="<?php echo "$d[kode_brg]"; ?>" type="button" class="btn btn-info modaledit erow" data-toggle="modal" data-target="#myModal">Edit</button>
+				<button data-id="<?php echo "$d[kode_brg]"; ?>" type="button" class="btn btn-danger modaledit erow" data-toggle="modal" data-target="#myModal">Hap</button>
 				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-success editrow erow<?php echo "$d[kode_brg]"; ?>">Edit</a>
 				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-success updaterow urow<?php echo "$d[kode_brg]"; ?>" style="display:none;">Update</a>
+				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-danger updaterow hapus<?php echo "$d[kode_brg]"; ?>" style="display:none;">Hapus</a>
 						<div class="alert bg-warning crow<?php echo "$d[kode_brg]"; ?>" role="alert" style="display:none;">
 					<svg class="glyph stroked cancel"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-cancel"></use></svg> HAPUS DATA !!!
 					<br /><center><button id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-danger hapus">Hapus</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="tidak" class="btn btn-primary">Tidak</button></center>
@@ -185,6 +157,10 @@ $totalPo = $r['totalPo'];
         </tbody>
 		<tr style="background-color: #DDD;"><td colspan="5" align="right"></td><td colspan="1" align="right"><b>Total PO : </b></td><td align="right"><b>Rp. <?php echo number_format($totalPo,2,",",".") ?></b></td></td></td><td></td></tr>
     </table>
+	<?php $sql = mysqli_query($connect_db,"SELECT * from detail_po_sem");
+							$row = mysqli_fetch_assoc($sql);
+							?>
+	<button type="button" class="btn btn-info modaledit erow" onclick="window.location='simpanpo.php?kode=<?php echo $row['id_po']?>';">Konfirmasi & Simpan PO</button>
 					</div>
 					</div>
 				</div>
@@ -252,8 +228,10 @@ $totalPo = $r['totalPo'];
 	$(document).ready(function(){	
 	  $(".editrow").click(function(){
 	  var id = $(this).attr("id");
+	  $("#myModal").hide('slow');
 	  $(".erow"+id).hide('slow');
 	  $(".urow"+id).show('slow');
+	  $(".hapus"+id).show('slow');
 	  $("#editjumlah"+id).hide('slow');
 	  $("#boxjumlah"+id).show('slow');
 	  $("#editharga"+id).hide('slow');

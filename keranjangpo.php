@@ -80,6 +80,10 @@ $totalPo = $r['totalPo'];
         </tbody>
 		<tr style="background-color: #DDD;"><td colspan="5" align="right"></td><td colspan="1" align="right"><b>Total PO : </b></td><td align="right"><b>Rp. <?php echo number_format($totalPo,2,",",".") ?></b></td></td></td><td></td></tr>
     </table>
+	<?php $sql = mysqli_query($connect_db,"SELECT * from detail_po_sem");
+							$row = mysqli_fetch_assoc($sql);
+							?>
+	<button type="button" class="btn btn-info modaledit erow" onclick="window.location='editpo.php?kode=<?php echo $row['id_po']?>';">Simpan PO</button>
 					</div>
 					</div>
 				</div>
