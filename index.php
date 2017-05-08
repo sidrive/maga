@@ -78,6 +78,7 @@
         <thead>
             <tr>
                 <th width="30px" class="text-center">No</th>
+				<th class="text-center">Nama Suplier</th>
                 <th class="text-center">Kode Barang</th>
                 <th class="text-center">Barcode</th>
                 <th class="text-center">Nama Barang</th>
@@ -89,13 +90,17 @@
         <tbody>
            <?php
 		   
-$data=$connect_db->query("select * from brg where SUP = '$_GET[kode]'");
+$data=$connect_db->query("select * from brg WHERE SUP = '0149' AND '0070' AND (BLAKHR <= '2017-03-30' AND BLAKHR >= '2017-03-01') AND (JML_BARANG <=5) AND (AWAL >=1 ) AND (JLAKHR >= '2017-03-01')");
 $no=1;
 while($d=$data->fetch_array()){ 
 ?>
 <input type="hidden"  id="editriger" value="edit"/>
             <tr>
                 <td><?php echo $no ?></td>
+				<td><span id="editkodebrg<?php echo "$d[KODE_BRG]"; ?>" class="textnya"><?php $sup=$d['SUP'];
+				$data1=$connect_db->query("select NAMA_SUP from sup where KODE_SUP = $sup") ; 
+				$d1=$data1->fetch_array();
+				echo $d1['NAMA_SUP']?></span></td>
                 <td>
 				<span id="editkodebrg<?php echo "$d[KODE_BRG]"; ?>" class="textnya"><?php echo "$d[KODE_BRG]"; ?></span>
                 <input type="text" name="kodebrg" value="<?php echo "$d[KODE_BRG]"; ?>" class="form-control formnya" id="boxkodebrg<?php echo "$d[KODE_BRG]"; ?>" style="display:none;"/>
