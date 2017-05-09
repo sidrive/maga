@@ -22,7 +22,7 @@
   <title>Maga Swalayan</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="css/bootstrap2.min.css">
+	<link href="css/bootstrap2.min.css" rel="stylesheet">
 	<link href="css/datepicker3.css" rel="stylesheet">
 	<link href="css/styles.css" rel="stylesheet">
 	<link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -67,6 +67,13 @@
 </div>
 </div>
 </header>
+	<div class="container"> 
+	<a id="btnsup1" class="btn btn-info btnsup1">Sup1</a>
+	<a id="btnsup2" class="btn btn-info btnsup2">Sup2</a>
+	<a id="btnsup3" class="btn btn-info btnsup3">Sup3</a>
+	<a id="btnsup4" class="btn btn-info btnsup4">Sup4</a>
+	<a id="btnsup5" class="btn btn-info brnsup5">Sup5</a>
+	</div>
 <div class="container">
 	<div class="row timbul">
 			<div class="col-lg-12">
@@ -90,7 +97,7 @@
         <tbody>
            <?php
 		   
-$data=$connect_db->query("select * from brg WHERE SUP = '0149' AND '0070' AND (BLAKHR <= '2017-03-30' AND BLAKHR >= '2017-03-01') AND (JML_BARANG <=5) AND (AWAL >=1 ) AND (JLAKHR >= '2017-03-01')");
+$data=$connect_db->query("select * from brg WHERE SUP = '0149' AND (BLAKHR <= '2017-03-30' AND BLAKHR >= '2017-03-01') AND (JML_BARANG <=5) AND (AWAL >=1 ) AND (JLAKHR >= '2017-03-01')");
 $no=1;
 while($d=$data->fetch_array()){ 
 ?>
@@ -124,7 +131,7 @@ while($d=$data->fetch_array()){
 				</td>
 				<td>
 				
-				<a id="<?php echo "$d[KODE_BRG]"; ?>" class="btn btn-success editrow erow<?php echo "$d[KODE_BRG]"; ?>">Tambah</a>
+				<a id="btninput" class="btn btn-success editrow erow" onclick="window.location='inputpofix.php?kode=<?php echo $d['SUP']?>'">Tambah</a>
 				<a id="<?php echo "$d[KODE_BRG]"; ?>" class="btn btn-danger updaterow urow<?php echo "$d[KODE_BRG]"; ?>" style="display:none;">Simpan</a>
 						<div class="alert bg-warning crow<?php echo "$d[KODE_BRG]"; ?>" role="alert" style="display:none;">
 					<svg class="glyph stroked cancel"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-cancel"></use></svg> HAPUS DATA !!!
@@ -183,8 +190,165 @@ $no++; }
 		});	
     </script>
 
-
-
+	<script type="text/javascript">
+	$(document).ready(function(){	
+	  $(".btnsup1").click(function(){
+	  var id = $(this).attr("id");
+	  var kodesup = "0070";
+	  if( kodesup == ""){
+	  $('#errorpop').show('slow');
+	  }else{
+	                $.ajax({
+					type: "POST",
+					url: "indexproses.php",
+					dataType: 'json',
+					data: 'kodesup=' + kodesup,
+					success: function(html){
+						$('#successpop').show('slow');
+						$('.hilang').hide('slow');
+						$('.timbul').load('barangsup.php?kode='+ kodesup);
+					},	
+					error: function(){
+						$('#gagalpop').show('slow');
+					}
+					});
+				}
+	    var detik = 3;	
+		function hitung(){
+		var to = setTimeout(hitung,1000);
+		 detik --;
+		 if(detik < 0){
+		 clearTimeout(to);
+		$("#errorpop , #gagalpop, #successpop").hide('slow');
+		 }
+		 }
+		 hitung();
+			});
+		 $(".formnya").mouseup(function(){
+		 return false;
+		 });
+		 });
+	</script>	
+	
+	<script type="text/javascript">
+	$(document).ready(function(){	
+	  $(".btnsup2").click(function(){
+	  var id = $(this).attr("id");
+	  var kodesup = "0149";
+	  if( kodesup == ""){
+	  $('#errorpop').show('slow');
+	  }else{
+	                $.ajax({
+					type: "POST",
+					url: "indexproses.php",
+					dataType: 'json',
+					data: 'kodesup=' + kodesup,
+					success: function(html){
+						$('#successpop').show('slow');
+						$('.hilang').hide('slow');
+						$('.timbul').load('barangsup.php?kode='+ kodesup);
+					},	
+					error: function(){
+						$('#gagalpop').show('slow');
+					}
+					});
+				}
+	    var detik = 3;	
+		function hitung(){
+		var to = setTimeout(hitung,1000);
+		 detik --;
+		 if(detik < 0){
+		 clearTimeout(to);
+		$("#errorpop , #gagalpop, #successpop").hide('slow');
+		 }
+		 }
+		 hitung();
+			});
+		 $(".formnya").mouseup(function(){
+		 return false;
+		 });
+		 });
+	</script>	
+	
+	<script type="text/javascript">
+	$(document).ready(function(){	
+	  $(".btnsup3").click(function(){
+	  var id = $(this).attr("id");
+	  var kodesup = "0076";
+	  if( kodesup == ""){
+	  $('#errorpop').show('slow');
+	  }else{
+	                $.ajax({
+					type: "POST",
+					url: "indexproses.php",
+					dataType: 'json',
+					data: 'kodesup=' + kodesup,
+					success: function(html){
+						$('#successpop').show('slow');
+						$('.hilang').hide('slow');
+						$('.timbul').load('barangsup.php?kode='+ kodesup);
+					},	
+					error: function(){
+						$('#gagalpop').show('slow');
+					}
+					});
+				}
+	    var detik = 3;	
+		function hitung(){
+		var to = setTimeout(hitung,1000);
+		 detik --;
+		 if(detik < 0){
+		 clearTimeout(to);
+		$("#errorpop , #gagalpop, #successpop").hide('slow');
+		 }
+		 }
+		 hitung();
+			});
+		 $(".formnya").mouseup(function(){
+		 return false;
+		 });
+		 });
+	</script>
+	
+	<script type="text/javascript">
+	$(document).ready(function(){	
+	  $(".btnsup4").click(function(){
+	  var id = $(this).attr("id");
+	  var kodesup = "0105";
+	  if( kodesup == ""){
+	  $('#errorpop').show('slow');
+	  }else{
+	                $.ajax({
+					type: "POST",
+					url: "indexproses.php",
+					dataType: 'json',
+					data: 'kodesup=' + kodesup,
+					success: function(html){
+						$('#successpop').show('slow');
+						$('.hilang').hide('slow');
+						$('.timbul').load('barangsup.php?kode='+ kodesup);
+					},	
+					error: function(){
+						$('#gagalpop').show('slow');
+					}
+					});
+				}
+	    var detik = 3;	
+		function hitung(){
+		var to = setTimeout(hitung,1000);
+		 detik --;
+		 if(detik < 0){
+		 clearTimeout(to);
+		$("#errorpop , #gagalpop, #successpop").hide('slow');
+		 }
+		 }
+		 hitung();
+			});
+		 $(".formnya").mouseup(function(){
+		 return false;
+		 });
+		 });
+	</script>
 
 
 
