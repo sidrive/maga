@@ -54,4 +54,24 @@ echo json_encode(array());
 }
 }
 
+if($triger == 'tampilsuplier'){
+$tglawal=$_POST['tglawal'];
+$tglakhir=$_POST['tglakhir'];
+$res=$connect_db->query("SELECT * FROM po WHERE status_maga = 'N' AND tgl_po BETWEEN '$tglawal' AND '$tglakhir'");
+
+if($res){
+echo json_encode(array());
+}
+}
+
+if($triger == 'tampilkirim'){
+$tglawal=$_POST['tglawal'];
+$tglakhir=$_POST['tglakhir'];
+$res=$connect_db->query("SELECT * FROM po WHERE status_maga = 'Y' AND status_suplier = 'Y' AND status_kirim = 'Y' AND tgl_po BETWEEN '$tglawal' AND '$tglakhir'");
+
+if($res){
+echo json_encode(array());
+}
+}
+
 ?>

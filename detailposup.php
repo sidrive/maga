@@ -139,11 +139,7 @@ while($d=$data->fetch_array()){
 				<textarea name="alamat" cols="30" rows="10" class="form-control formnya" id="boxalamat<?php echo "$d[id_po]"; ?>" style="display:none;"><?php echo "$d[total]"; ?></textarea>
 				</td>
                 <td>
-				<button data-id="<?php echo "$d[kode_brg]"; ?>" type="button" class="btn btn-danger modaledit erow" data-toggle="modal" data-target="#myModal">Hap</button>
-				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-success editrow erow<?php echo "$d[kode_brg]"; ?>">Edit</a>
-				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-success updaterow urow<?php echo "$d[kode_brg]"; ?>" style="display:none;">Update</a>
-				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-danger updaterow hapus<?php echo "$d[kode_brg]"; ?>" style="display:none;">Hapus</a>
-						<div class="alert bg-warning crow<?php echo "$d[kode_brg]"; ?>" role="alert" style="display:none;">
+					<div class="alert bg-warning crow<?php echo "$d[kode_brg]"; ?>" role="alert" style="display:none;">
 					<svg class="glyph stroked cancel"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-cancel"></use></svg> HAPUS DATA !!!
 					<br /><center><button id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-danger hapus">Hapus</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="tidak" class="btn btn-primary">Tidak</button></center>
 				</td>
@@ -157,11 +153,7 @@ $totalPo = $r['totalPo'];
         </tbody>
 		<tr style="background-color: #DDD;"><td colspan="5" align="right"></td><td colspan="1" align="right"><b>Total PO : </b></td><td align="right"><b>Rp. <?php echo number_format($totalPo,2,",",".") ?></b></td></td></td><td></td></tr>
     </table>
-	<?php $sql = mysqli_query($connect_db,"SELECT * from detail_po_sem");
-							$row = mysqli_fetch_assoc($sql);
-							?>
-	<button type="button" class="btn btn-info modaledit erow" onclick="window.location='simpanpo.php?kode=<?php $idpo = $_GET['kode']; echo $idpo ?>';">Konfirmasi & Simpan PO</button>
-					</div>
+						</div>
 					</div>
 				</div>
 			</div>

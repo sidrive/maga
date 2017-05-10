@@ -20,10 +20,7 @@
                 <th class="text-center">ID PO</th>
                 <th class="text-center">Suplier</th>
                 <th class="text-center">Tanggal Dibuat</th>
-                 <th class="text-center" width="100px">Total Harga PO</th>
-				<th class="text-center" width="50px">Status Maga</th>
-				<th class="text-center" width="50px">Status Suplier</th>
-				<th class="text-center" width="50px">Status Pengiriman</th>
+                <th class="text-center">Total Harga PO</th>
 				<th class="text-center">Opsi</th>
             </tr>
         </thead>
@@ -33,9 +30,10 @@
 if(isset($_GET['tglawal'])){
 	$tglawal = $_GET['tglawal'];
 	$tglakhir = $_GET['tglakhir'];
-	$query = "SELECT * FROM po WHERE status_kirim = 'N' AND tgl_po BETWEEN '$tglawal' AND '$tglakhir'";	
+	
+	$query = "SELECT * FROM po WHERE status_maga = 'Y' AND status_suplier = 'Y' AND status_kirim = 'Y' AND tgl_po BETWEEN '$tglawal' AND '$tglakhir'";	
 }else{
-	$query = "SELECT * FROM po WHERE status_kirim = 'N'";
+	$query = "SELECT * FROM po WHERE status_maga = 'Y' AND status_suplier = 'Y' AND status_kirim = 'Y'";
 }
 		   
 $data=$connect_db->query($query);
@@ -49,7 +47,6 @@ while($d=$data->fetch_array()){
                 <td>
 				<span id="editkodebrg<?php echo "$d[id_po]"; ?>" class="textnya"><?php echo "$d[id_po]"; ?></span>
                 <input type="text" name="kodebrg" value="<?php echo "$d[id_po]"; ?>" class="form-control formnya" id="boxkodebrg<?php echo "$d[id_po]"; ?>" style="display:none;"/>
-				<input type="text" name="kodesup" value="<?php echo "$_GET[kode]"; ?>" class="form-control formnya" id="boxkodesup<?php echo "$d[id_po]"; ?>" style="display:none;"/>
 				</td>
                 <td>
 				<span id="editbarcode<?php echo "$d[id_po]"; ?>" class="textnya"><?php 
@@ -66,35 +63,8 @@ while($d=$data->fetch_array()){
 				<span id="editharga<?php echo "$d[id_po]"; ?>" class="textnya"><?php echo "Rp. ".number_format($d['total'],2,",",".");; ?></span>	
 				<input readonly type="text" name="harga" value="<?php echo "$d[HRG_SUP]"; ?>" class="form-control formnya" id="boxharga<?php echo "$d[id_po]"; ?>" style="display:none;"/>
 				</td>
-				<td>
-				<span id="editstsmaga<?php echo "$d[id_po]"; ?>" class="textnya"><?php 	
-				if ($d['status_maga']== 'Y'){
-					$status = 'Setuju'; echo $status;
-				} if ($d['status_maga']== 'N'){
-					$status = 'Belum'; echo $status;
-				} ?></span>
-				<input type="text" name="barcode" value="<?php echo "$d[kode_sup]"; ?>" class="form-control formnya" id="boxbarcode<?php echo "$d[id_po]"; ?>" style="display:none;"/>
-				</td>
-				<td>
-				<span id="editstssup<?php echo "$d[id_po]"; ?>" class="textnya"><?php 	
-				if ($d['status_suplier']== 'Y'){
-					$status = 'Setuju'; echo $status;
-				} if ($d['status_suplier']== 'N'){
-					$status = 'Belum'; echo $status;
-				} ?></span>
-				<input type="text" name="barcode" value="<?php echo "$d[kode_sup]"; ?>" class="form-control formnya" id="boxbarcode<?php echo "$d[id_po]"; ?>" style="display:none;"/>
-				</td>
-				<td>
-				<span id="editstsmaga<?php echo "$d[id_po]"; ?>" class="textnya"><?php 	
-				if ($d['status_kirim']== 'Y'){
-					$status = 'Terkirim'; echo $status;
-				} if ($d['status_kirim']== 'N'){
-					$status = 'Belum'; echo $status;
-				} ?></span>
-				<input type="text" name="barcode" value="<?php echo "$d[kode_sup]"; ?>" class="form-control formnya" id="boxbarcode<?php echo "$d[id_po]"; ?>" style="display:none;"/>
-				</td>
 				<td align="center">
-				<button type="button" class="btn btn-info modaledit erow" onclick="window.location='editposup.php?kode=<?php echo $d['id_po']?>';">Edit PO</button>
+				<button type="button" class="btn btn-info modaledit erow" onclick="window.location='detailposup.php?kode=<?php echo $d['id_po']?>';">Detail PO</button>
 				</td>
             </tr>
 <?php
