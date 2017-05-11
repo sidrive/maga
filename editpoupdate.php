@@ -57,4 +57,16 @@ echo json_encode(array());
 }
 }
 
+if($triger == 'editposup'){
+$id=$_POST['id'];
+$jumlah=$_POST['jumlah'];
+$harga=$_POST['harga'];
+$totalpo = $harga * $jumlah;
+$res=$connect_db->query("UPDATE detail_po SET jml_brg=$jumlah, total=$totalpo WHERE kode_brg=$id");
+
+if($res){
+echo json_encode(array());
+}
+}
+
 ?>

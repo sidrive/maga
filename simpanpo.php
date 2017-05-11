@@ -95,8 +95,8 @@ $id = $_GET['kode'];
 	  date_default_timezone_set("Asia/Jakarta");
 		  $edit = date('Y-m-d');
 	  
-	  $simpanpo = "INSERT INTO po (id_po, kode_sup, tgl_po, total, status_maga, status_suplier)
-					VALUES ('$id','$kode_sup','$edit',$rowTotal[total_po], '$status_maga', '$status_suplier')";
+	  $simpanpo = "INSERT INTO po (id_po, kode_sup, tgl_po, total, status_maga, status_suplier, status_kirim)
+					VALUES ('$id','$kode_sup','$edit',$rowTotal[total_po], '$status_maga', '$status_suplier', 'N')";
 					$resultSimpanPo = mysqli_query($connect_db, $simpanpo);
 					
 	/* Bersihkan data pada tabel detail_po_sem */

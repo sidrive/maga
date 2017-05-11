@@ -27,7 +27,8 @@
 <link href="css/bootstrap2.min.css" rel="stylesheet">
 <link href="css/datepicker3.css" rel="stylesheet">
 <link href="css/styles.css" rel="stylesheet">
-<link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
+<link href="css/dataTables.bootstrap.min.css" rel="stylesheet"> 
+<!--  <link href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet"> -->
 
 <!--Icons-->
 <script src="js/lumino.glyphs.js"></script>
@@ -237,8 +238,9 @@ $no++; }
 	<script src="js/jquery-1.11.1.min.js"></script>
 	<script src="js/bootstrap2.min.js"></script>
 	<script src="js/bootstrap-datepicker.js"></script>
-	<script src="js/jquery.dataTables.min.js"></script>
-    <script src="js/dataTables.bootstrap.min.js"></script>
+	<script src="js/jquery.dataTables.min.js"></script> 
+	<!-- <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script> -->
+	<script src="js/dataTables.bootstrap.min.js"></script>
     <script>
     	$(document).ready(function() {
     		$('#tabeldata').DataTable();

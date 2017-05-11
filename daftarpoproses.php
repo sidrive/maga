@@ -74,4 +74,14 @@ echo json_encode(array());
 }
 }
 
+if($triger == 'tampilpenawaran'){
+$tglawal=$_POST['tglawal'];
+$tglakhir=$_POST['tglakhir'];
+$res=$connect_db->query("SELECT * FROM penawaran WHERE tgl_penawaran BETWEEN '$tglawal' AND '$tglakhir'");
+
+if($res){
+echo json_encode(array());
+}
+}
+
 ?>

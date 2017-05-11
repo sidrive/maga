@@ -1,0 +1,93 @@
+<link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
+	<script src="js/jquery.dataTables.min.js"></script>
+    <script src="js/dataTables.bootstrap.min.js"></script>
+    <script>
+    	$(document).ready(function() {
+    		$('#tabeldata').DataTable();
+		});	
+	</script>
+	
+				<div class="col-lg-12 hilang">
+				<div class="panel panel-default">
+					
+					<div class="panel-heading"></div>	
+					<div class="panel-body">
+					<div class="table-responsive">
+		<table width="100%" class="table table-striped table-bordered" id="tabeldata" >
+        <thead>
+            <tr>
+                <th class="text-center">No</th>
+                <th class="text-center">ID Penawaran</th>
+                <th class="text-center">Suplier</th>
+                <th class="text-center">Tanggal Dibuat</th>
+				<th class="text-center" width="50px">Status Maga</th>
+				<th class="text-center" width="50px">Status Suplier</th>
+				<th class="text-center">Opsi</th>
+            </tr>
+        </thead>
+        <tbody>
+           <?php
+		   require_once("koneksi.php");
+if(isset($_GET['tglawal'])){
+	$tglawal = $_GET['tglawal'];
+	$tglakhir = $_GET['tglakhir'];
+	$query = "SELECT * FROM penawaran WHERE tgl_penawaran BETWEEN '$tglawal' AND '$tglakhir'";	
+}else{
+	$query = "SELECT * FROM penawaran";
+}
+		   
+$data=$connect_db->query($query);
+$no=1;
+while($d=$data->fetch_array()){ 
+	
+?>
+<input type="hidden"  id="editriger" value="edit"/>
+            <tr>
+                <td><?php echo $no ?></td>
+                <td>
+				<span id="editkodebrg<?php echo "$d[id_penawaran]"; ?>" class="textnya"><?php echo "$d[id_penawaran]"; ?></span>
+                <input type="text" name="kodebrg" value="<?php echo "$d[id_penawaran]"; ?>" class="form-control formnya" id="boxkodebrg<?php echo "$d[id_penawaran]"; ?>" style="display:none;"/>
+				<input type="text" name="kodesup" value="<?php echo "$_GET[kode]"; ?>" class="form-control formnya" id="boxkodesup<?php echo "$d[id_penawaran]"; ?>" style="display:none;"/>
+				</td>
+                <td>
+				<span id="editbarcode<?php echo "$d[id_penawaran]"; ?>" class="textnya"><?php 
+				$data1=$connect_db->query("select NAMA_SUP from sup where KODE_SUP = $d[kode_sup]");
+				$row=$data1->fetch_assoc();
+				echo "$row[NAMA_SUP]";?></span>
+				<input type="text" name="barcode" value="<?php echo "$d[kode_sup]"; ?>" class="form-control formnya" id="boxbarcode<?php echo "$d[id_penawaran]"; ?>" style="display:none;"/>
+				</td>
+				<td>
+				<span id="editnamabrg<?php echo "$d[id_penawaran]"; ?>" class="textnya"><?php $tanggal = date('d F Y',strtotime($d['tgl_penawaran']));echo $tanggal; ?></span>
+				<input type="text" name="namabrg" value="<?php echo "$d[tgl_po]"; ?>" class="form-control formnya" id="boxnamabrg<?php echo "$d[id_penawaran]"; ?>" style="display:none;"/>
+				</td>
+               	<td>
+				<span id="editstsmaga<?php echo "$d[id_penawaran]"; ?>" class="textnya"><?php 	
+				if ($d['status_maga']== 'Y'){
+					$status = 'Setuju'; echo $status;
+				} if ($d['status_maga']== 'N'){
+					$status = 'Belum'; echo $status;
+				} ?></span>
+				<input type="text" name="barcode" value="<?php echo "$d[kode_sup]"; ?>" class="form-control formnya" id="boxbarcode<?php echo "$d[id_penawaran]"; ?>" style="display:none;"/>
+				</td>
+				<td>
+				<span id="editstssup<?php echo "$d[id_penawaran]"; ?>" class="textnya"><?php 	
+				if ($d['status_suplier']== 'Y'){
+					$status = 'Setuju'; echo $status;
+				} if ($d['status_suplier']== 'N'){
+					$status = 'Belum'; echo $status;
+				} ?></span>
+				<input type="text" name="barcode" value="<?php echo "$d[kode_sup]"; ?>" class="form-control formnya" id="boxbarcode<?php echo "$d[id_penawaran]"; ?>" style="display:none;"/>
+				</td>
+				<td align="center">
+				<button type="button" class="btn btn-info modaledit erow" onclick="window.location='detailpenawaran.php?kode=<?php echo $d['id_penawaran']?>';">Detail Penawaran</button>
+				</td>
+            </tr>
+<?php
+$no++; }
+?>		
+        </tbody>
+    </table>
+					</div>
+					</div>
+				</div>
+			</div>
