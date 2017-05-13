@@ -69,4 +69,13 @@ echo json_encode(array());
 }
 }
 
+if($triger == 'cekharga'){
+$kode=$_POST['kode'];
+$res=$connect_db->query("select * from brg where KODE_BRG = '$kode'");
+
+if($res){
+echo json_encode(array());
+}
+}
+
 ?>

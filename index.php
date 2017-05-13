@@ -61,7 +61,7 @@
             <li><a href="daftarpoterkirim.php">PO Selesai</a></li>
           </ul>
         </li>
-        <li><a href="#">Penawaran</a></li>
+        <li><a href="daftarpenawaran.php">Penawaran</a></li>
         <li><a href="#">Admin</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
