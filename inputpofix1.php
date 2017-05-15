@@ -241,11 +241,12 @@ $no++; }
 	<script src="js/jquery.dataTables.min.js"></script> 
 	<!-- <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script> -->
 	<script src="js/dataTables.bootstrap.min.js"></script>
-    <script>
+  <!--   <script>
     	$(document).ready(function() {
     		$('#tabeldata').DataTable();
 		});	
-    </script>
+    </script> 
+  -->
 <!--  ############################++++++++++++++++SCRIPT AJAX MODAL ================############################  -->		
 <!--  ############################++++++++++++++++SCRIPT AJAX MODAL ================############################  -->		
 	<script type="text/javascript">
