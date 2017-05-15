@@ -143,7 +143,7 @@
 					<div class="panel-heading">TABEL DATA BARANG</div>
 					<div class="panel-body">
 					<div class="table-responsive">
-		<table width="100%" class="table table-striped table-bordered" id="tabeldata" >
+		<table width="100%" class="table table-striped table-bordered table-hover" id="tabeldata" >
         <thead>
             <tr>
                 <th width="30px" class="text-center">No</th>
@@ -162,8 +162,15 @@ $data=$connect_db->query("select * from brg where SUP = '$_GET[kode]'");
 $no=1;
 while($d=$data->fetch_array()){ 
 ?>
+<?php 
+if ($d['JML_BARANG']<=5){
+	$warna = "danger";
+} else if ($d['JML_BARANG']<=10){
+	$warna = "warning";
+}else{$warna = "success";}
+?>
 <input type="hidden"  id="editriger" value="edit"/>
-            <tr>
+            <tr class="<?php echo $warna; ?>" >
                 <td><?php echo $no ?></td>
                 <td>
 				<span id="editkodebrg<?php echo "$d[KODE_BRG]"; ?>" class="textnya"><?php echo "$d[KODE_BRG]"; ?></span>
@@ -268,8 +275,10 @@ $no++; }
 <!--  ############################++++++++++++++++SCRIPT AJAX EDITING ================############################  -->		
 <!--  ############################++++++++++++++++SCRIPT AJAX EDITING ================############################  -->		
 	<script type="text/javascript">
-	$(document).ready(function(){	
+	$(document).ready(function(){
+$('#tabeldata').DataTable()		
 	  $(".editrow").click(function(){
+		  
 	  var id = $(this).attr("id");
 	  $(".erow"+id).hide('slow');
 	  $(".urow"+id).show('slow');
@@ -320,37 +329,7 @@ $no++; }
 		 });
 		 });
 	</script>	
-<!--  ############################++++++++++++++++SCRIPT AJAX ADDING ================############################  -->		
-<!--  ############################++++++++++++++++SCRIPT AJAX ADDING ================############################  -->	
-		<script type="text/javascript">
-	  $(".simpan").click(function(){
-	  var triger = "tambah";
-	  $.ajax({
-					type: "POST",
-					url: "pros.php",
-					dataType: 'json',
-					data: 'triger=' + triger,
-					success: function(){
-						$('#successpop').show('slow');
-						$('.hilang').hide('slow');
-						$('.timbul').load('timbul2.php');
-					},	
-					error: function(){
-						$('#gagalpop').show('slow');
-					}
-					});
-					var detik = 3;	
-		function hitung(){
-		var to = setTimeout(hitung,1000);
-		 detik --;
-		 if(detik < 0){
-		 clearTimeout(to);
-		$("#errorpop , #gagalpop, #successpop").hide('slow');
-		 }
-		 }
-		 hitung();
-				});	
-	</script>	
+
 	<script>
 		!function ($) {
 			$(document).on("click","ul.nav li.parent > a > span.icon", function(){		  
