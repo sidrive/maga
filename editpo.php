@@ -1,7 +1,7 @@
 <?php
   // memanggil file koneksi.php untuk melakukan koneksi database
  require_once("koneksi.php");
- require_once "user.php";
+ require_once "User.php";
 
     // Buat object user
     $user = new User($db);
@@ -160,7 +160,7 @@ $totalPo = $r['totalPo'];
 	<?php $sql = mysqli_query($connect_db,"SELECT * from detail_po_sem");
 							$row = mysqli_fetch_assoc($sql);
 							?>
-	<button type="button" class="btn btn-info modaledit erow" onclick="window.location='simpanpo.php?kode=<?php echo $row['id_po']?>';">Konfirmasi & Simpan PO</button>
+	<button type="button" class="btn btn-info modaledit erow" onclick="window.location='simpanpo.php?kode=<?php echo $row['id_po']?>&sup=<?php echo substr($row['id_po'],-4) ?>';">Konfirmasi & Simpan PO</button>
 					</div>
 					</div>
 				</div>

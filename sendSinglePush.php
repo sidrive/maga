@@ -7,25 +7,26 @@ require_once 'Push.php';
 $db = new DbOperation();
 
 $response = array(); 
-
-if($_SERVER['REQUEST_METHOD']=='POST'){	
+$title = "Maga Swalayan";
+$message = "PO Baru Telah ditambahkan ke Perusahaan Anda";
+if($_SERVER['REQUEST_METHOD']=='GET'){	
 	//hecking the required params 
-	if(isset($_POST['title']) and isset($_POST['message']) and isset($_POST['email'])){
+	if(isset($_GET['sup'])){
 
 		//creating a new push
 		$push = null; 
 		//first check if the push has an image with it
-		if(isset($_POST['image'])){
+		if(isset($_GET['image'])){
 			$push = new Push(
-					$_POST['title'],
-					$_POST['message'],
-					$_POST['image']
+					$_GET['title'],
+					$_GET['message'],
+					$_GET['image']
 				);
 		}else{
 			//if the push don't have an image give null in place of image
 			$push = new Push(
-					$_POST['title'],
-					$_POST['message'],
+					$_GET['title'],
+					$_GET['message'],
 					null
 				);
 		}
@@ -34,7 +35,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 		$mPushNotification = $push->getPush(); 
 
 		//getting the token from database object 
-		$devicetoken = $db->getTokenByEmail($_POST['email']);
+		$devicetoken = $db->getTokenByEmail($_GET['sup']);
 
 		//creating firebase class object 
 		$firebase = new Firebase(); 
@@ -51,3 +52,4 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 }
 
 echo json_encode($response);
+header("location:index.php");

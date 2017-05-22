@@ -58,7 +58,7 @@ class DbOperation
 
 
 	//getting a specified token to send push to selected device
-	public function getTokenByEmail($email){
+	public function getTokenByEmail($sup){
 	/*$user_name = "id374389_ikunit";
 	$password = "maga5353";
 	$database = "id374389_maga";
@@ -66,7 +66,7 @@ class DbOperation
 	*/
 	//$connect_db=mysqli_connect($host_name, $user_name, $password, $database);
 	//$stmt = mysqli_query($connect_db, "SELECT token FROM devices WHERE email = '$email'");
-	$stmt = $this->con->query("SELECT token FROM devices WHERE email = '$email'");
+	$stmt = $this->con->query("SELECT token FROM user_suplier WHERE kode_sup = '$sup'");
 	//$stmt->fetch_assoc();
 	//$result = mysqli_fetch_assoc($stmt);
 	//$stmt->bind_param("s",$email);

@@ -1,7 +1,7 @@
 <?php  
     // Lampirkan db dan User
     require_once "koneksi.php";
-    require_once "user.php";
+    require_once "User.php";
 
     // Buat object user
     $user = new User($db);
@@ -87,7 +87,7 @@
 					<div class="panel-heading">TABEL DATA BARANG</div>
 					<div class="panel-body">
 					<div class="table-responsive">
-		<table width="100%" class="table table-striped table-bordered table-hover" id="tabeldata" >
+		<table width="100%" class="table table-striped table-bordered" id="tabeldata" >
         <thead>
             <tr>
                 <th width="30px" class="text-center">No</th>
@@ -103,19 +103,12 @@
         <tbody>
            <?php
 		   
-$data=$connect_db->query("select * from brg WHERE SUP = '0149' AND (BLAKHR <= '2017-03-30' AND BLAKHR >= '2017-03-01') AND (JML_BARANG <=10) AND (AWAL >=1 ) AND (JLAKHR >= '2017-03-01')");
+$data=$connect_db->query("select * from brg WHERE (BLAKHR <= '2017-03-30' AND BLAKHR >= '2017-03-01') AND (JML_BARANG <=5) AND (AWAL >=1 ) AND (JLAKHR >= '2017-03-01') ORDER BY JML_BARANG ASC");
 $no=1;
 while($d=$data->fetch_array()){ 
 ?>
-<?php 
-if ($d['JML_BARANG']<=5){
-	$warna = "danger";
-} else if ($d['JML_BARANG']<=10){
-	$warna = "warning";
-}else{$warna = "success";}
-?>
 <input type="hidden"  id="editriger" value="edit"/>
-            <tr class="<?php echo $warna; ?>">
+            <tr>
                 <td><?php echo $no ?></td>
 				<td><span id="editkodebrg<?php echo "$d[KODE_BRG]"; ?>" class="textnya"><?php $sup=$d['SUP'];
 				$data1=$connect_db->query("select NAMA_SUP from sup where KODE_SUP = $sup") ; 
@@ -144,7 +137,7 @@ if ($d['JML_BARANG']<=5){
 				</td>
 				<td>
 				
-				<a id="btninput" class="btn btn-success editrow erow" onclick="window.location='inputpofix1.php?kode=<?php echo $d['SUP']?>'">Tambah</a>
+				<a id="btninput" class="btn btn-success editrow erow" onclick="window.location='inputpofix.php?kode=<?php echo $d['SUP']?>'">Tambah</a>
 				<a id="<?php echo "$d[KODE_BRG]"; ?>" class="btn btn-danger updaterow urow<?php echo "$d[KODE_BRG]"; ?>" style="display:none;">Simpan</a>
 						<div class="alert bg-warning crow<?php echo "$d[KODE_BRG]"; ?>" role="alert" style="display:none;">
 					<svg class="glyph stroked cancel"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-cancel"></use></svg> HAPUS DATA !!!

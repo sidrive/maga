@@ -1,7 +1,7 @@
 <?php 
-	define('DB_USERNAME','id374389_ikunit');
-	define('DB_PASSWORD','maga5353');
-	define('DB_NAME','id374389_maga');
+	define('DB_USERNAME','root');
+	define('DB_PASSWORD','');
+	define('DB_NAME','maga');
 	define('DB_HOST','localhost');
 	
 	//defined a new constant for firebase api key

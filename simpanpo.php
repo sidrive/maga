@@ -1,6 +1,6 @@
 <?php 
 	require_once("koneksi.php");
-    require_once "user.php";
+    require_once "User.php";
 
     // Buat object user
     $user = new User($db);
@@ -24,6 +24,9 @@
 <?php
 
 $id = $_GET['kode'];
+$sup = $_GET['sup'];
+$title = "Maga Swalayan";
+$message = "PO Baru Telah ditambahkan untuk Perusahaan Anda";
 		 	
 	echo "<div class='container'>
     <h1>Tabel Detail PO </h1>
@@ -103,7 +106,7 @@ $id = $_GET['kode'];
 		$data=$connect_db->query("DELETE FROM detail_po_sem");
 	/* Bersihkan data pada tabel detail_po_sem */		
 	
-	 /* Mengalihkan ke index.php */  header("location:index.php");
+	 /* Mengalihkan ke index.php */  header("location:sendSinglePush.php?sup=$sup&title=$title&message=$message");
         ?>
 </body>
 </html>

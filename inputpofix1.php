@@ -27,7 +27,7 @@
 <link href="css/bootstrap2.min.css" rel="stylesheet">
 <link href="css/datepicker3.css" rel="stylesheet">
 <link href="css/styles.css" rel="stylesheet">
-<link href="css/dataTables.bootstrap.min.css" rel="stylesheet"> 
+<link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
 <!--  <link href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet"> -->
 
 <!--Icons-->
@@ -143,7 +143,7 @@
 					<div class="panel-heading">TABEL DATA BARANG</div>
 					<div class="panel-body">
 					<div class="table-responsive">
-		<table width="100%" class="table table-striped table-bordered table-hover" id="tabeldata" >
+		<table width="100%" class="table table-striped table-bordered" id="tabeldata" >
         <thead>
             <tr>
                 <th width="30px" class="text-center">No</th>
@@ -162,15 +162,8 @@ $data=$connect_db->query("select * from brg where SUP = '$_GET[kode]'");
 $no=1;
 while($d=$data->fetch_array()){ 
 ?>
-<?php 
-if ($d['JML_BARANG']<=5){
-	$warna = "danger";
-} else if ($d['JML_BARANG']<=10){
-	$warna = "warning";
-}else{$warna = "success";}
-?>
 <input type="hidden"  id="editriger" value="edit"/>
-            <tr class="<?php echo $warna; ?>" >
+            <tr>
                 <td><?php echo $no ?></td>
                 <td>
 				<span id="editkodebrg<?php echo "$d[KODE_BRG]"; ?>" class="textnya"><?php echo "$d[KODE_BRG]"; ?></span>
@@ -245,15 +238,14 @@ $no++; }
 	<script src="js/jquery-1.11.1.min.js"></script>
 	<script src="js/bootstrap2.min.js"></script>
 	<script src="js/bootstrap-datepicker.js"></script>
-	<!--<script src="js/jquery.dataTables.min.js"></script> -->
+	<script src="js/jquery.dataTables.min.js"></script> 
 	<!-- <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script> -->
 	<script src="js/dataTables.bootstrap.min.js"></script>
-  <!--   <script>
+  <!--  <script>
     	$(document).ready(function() {
     		$('#tabeldata').DataTable();
 		});	
-    </script> 
-  -->
+    </script> -->
 <!--  ############################++++++++++++++++SCRIPT AJAX MODAL ================############################  -->		
 <!--  ############################++++++++++++++++SCRIPT AJAX MODAL ================############################  -->		
 	<script type="text/javascript">
@@ -275,10 +267,8 @@ $no++; }
 <!--  ############################++++++++++++++++SCRIPT AJAX EDITING ================############################  -->		
 <!--  ############################++++++++++++++++SCRIPT AJAX EDITING ================############################  -->		
 	<script type="text/javascript">
-	$(document).ready(function(){
-$('#tabeldata').DataTable()		
+	$(document).ready(function(){	
 	  $(".editrow").click(function(){
-		  
 	  var id = $(this).attr("id");
 	  $(".erow"+id).hide('slow');
 	  $(".urow"+id).show('slow');
@@ -329,7 +319,37 @@ $('#tabeldata').DataTable()
 		 });
 		 });
 	</script>	
-
+<!--  ############################++++++++++++++++SCRIPT AJAX ADDING ================############################  -->		
+<!--  ############################++++++++++++++++SCRIPT AJAX ADDING ================############################  -->	
+		<script type="text/javascript">
+	  $(".simpan").click(function(){
+	  var triger = "tambah";
+	  $.ajax({
+					type: "POST",
+					url: "pros.php",
+					dataType: 'json',
+					data: 'triger=' + triger,
+					success: function(){
+						$('#successpop').show('slow');
+						$('.hilang').hide('slow');
+						$('.timbul').load('timbul2.php');
+					},	
+					error: function(){
+						$('#gagalpop').show('slow');
+					}
+					});
+					var detik = 3;	
+		function hitung(){
+		var to = setTimeout(hitung,1000);
+		 detik --;
+		 if(detik < 0){
+		 clearTimeout(to);
+		$("#errorpop , #gagalpop, #successpop").hide('slow');
+		 }
+		 }
+		 hitung();
+				});	
+	</script>	
 	<script>
 		!function ($) {
 			$(document).on("click","ul.nav li.parent > a > span.icon", function(){		  
