@@ -1,7 +1,7 @@
 <?php
   // memanggil file koneksi.php untuk melakukan koneksi database
  require_once("koneksi.php");
- require_once "user.php";
+ require_once "User.php";
 
     // Buat object user
     $user = new User($db);
@@ -245,7 +245,7 @@ $no++; }
 	<script src="js/jquery-1.11.1.min.js"></script>
 	<script src="js/bootstrap2.min.js"></script>
 	<script src="js/bootstrap-datepicker.js"></script>
-	<script src="js/jquery.dataTables.min.js"></script> 
+	<!--<script src="js/jquery.dataTables.min.js"></script> -->
 	<!-- <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script> -->
 	<script src="js/dataTables.bootstrap.min.js"></script>
   <!--   <script>
