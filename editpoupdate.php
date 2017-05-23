@@ -35,7 +35,7 @@ header("location:editpo.php?kode=$idpo");
 
 if($triger == 'del'){
 $id=$_POST['id'];
-$connect_db->query("delete from user where user_id='$id' ");
+$connect_db->query("delete from detail_po_sem where kode_brg='$id' ");
 }
 
 if($triger == 'tambah'){

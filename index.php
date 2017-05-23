@@ -73,13 +73,7 @@
 </div>
 </div>
 </header>
-	<div class="container"> 
-	<a id="btnsup1" class="btn btn-info btnsup1">Sup1</a>
-	<a id="btnsup2" class="btn btn-info btnsup2">Sup2</a>
-	<a id="btnsup3" class="btn btn-info btnsup3">Sup3</a>
-	<a id="btnsup4" class="btn btn-info btnsup4">Sup4</a>
-	<a id="btnsup5" class="btn btn-info brnsup5">Sup5</a>
-	</div>
+
 <div class="container">
 	<div class="row timbul">
 			<div class="col-lg-12">
@@ -137,7 +131,7 @@ while($d=$data->fetch_array()){
 				</td>
 				<td>
 				
-				<a id="btninput" class="btn btn-success editrow erow" onclick="window.location='inputpofix.php?kode=<?php echo $d['SUP']?>'">Tambah</a>
+				<a id="btninput" class="btn btn-success editrow erow" onclick="window.location='inputpofix1.php?kode=<?php echo $d['SUP']?>'">Tambah</a>
 				<a id="<?php echo "$d[KODE_BRG]"; ?>" class="btn btn-danger updaterow urow<?php echo "$d[KODE_BRG]"; ?>" style="display:none;">Simpan</a>
 						<div class="alert bg-warning crow<?php echo "$d[KODE_BRG]"; ?>" role="alert" style="display:none;">
 					<svg class="glyph stroked cancel"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-cancel"></use></svg> HAPUS DATA !!!

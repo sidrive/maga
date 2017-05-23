@@ -54,8 +54,17 @@ $harga=$_POST['harga'];
 $totalpo = $harga * $jumlah;
 $idpo = 'FBMG'.date('dmy').'-'.$_POST['kodesup'];
 $edit = date('Y-m-d');
-$res=$connect_db->query("INSERT INTO detail_po_sem (id_po, kode_brg, barcode, nama_brg, hrg_sup, jml_brg, total, tgl_edit)
+	$cek=$connect_db->query("SELECT * FROM detail_po_sem WHERE kode_brg = '$id' ");
+	$d=$cek->fetch_array();
+	if(!empty($d['kode_brg'])){
+		
+		$res=$connect_db->query("UPDATE detail_po_sem SET jml_brg=$jumlah, total=$totalpo1 WHERE kode_brg=$id");
+		
+	} else {
+		
+		$res=$connect_db->query("INSERT INTO detail_po_sem (id_po, kode_brg, barcode, nama_brg, hrg_sup, jml_brg, total, tgl_edit)
 					VALUES ('$idpo', '$id', '$barcode', '$namabrg', $harga, $jumlah, $totalpo, '$edit')");
+	}
 
 if($res){
 echo json_encode(array());

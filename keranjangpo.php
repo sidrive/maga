@@ -55,17 +55,18 @@ while($d=$data->fetch_array()){
 				<input readonly type="text" name="harga" value="<?php echo "$d[hrg_sup]"; ?>" class="form-control formnya" id="boxharga<?php echo "$d[kode_brg]"; ?>" style="display:none;"/>
 				</td>
 				<td>
-				<span id="editjumlah<?php echo "$d[kode_brg]"; ?>" class="textnya"><?php echo "$d[jml_brg]"; ?></span>
-				<input type="text" name="jumlah" value="<?php echo "$d[jml_brg]"; ?>" class="form-control formnya" id="boxjumlah<?php echo "$d[kode_brg]"; ?>" style="display:none;"/>
+				<span id="editjumlahkeranjang<?php echo "$d[kode_brg]"; ?>" class="textnya"><?php echo "$d[jml_brg]"; ?></span>
+				<input type="text" name="jumlah" value="<?php echo "$d[jml_brg]"; ?>" class="form-control formnya" id="boxjumlahkeranjang<?php echo "$d[kode_brg]"; ?>" style="display:none;"/>
 				</td>
 				<td>
 				<span id="editalamat<?php echo "$d[id_po]"; ?>" class="textnya"><?php echo number_format($d['total'],2,",","."); ?></span>
 				<textarea name="alamat" cols="30" rows="10" class="form-control formnya" id="boxalamat<?php echo "$d[id_po]"; ?>" style="display:none;"><?php echo "$d[total]"; ?></textarea>
 				</td>
                 <td>
-				<button data-id="<?php echo "$d[kode_brg]"; ?>" type="button" class="btn btn-info modaledit erow" data-toggle="modal" data-target="#myModal">Edit</button>
+				<!-- <button data-id="<?php echo "$d[kode_brg]"; ?>" type="button" class="btn btn-info modaledit erow" data-toggle="modal" data-target="#myModal">Edit</button> -->
 				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-success editpo perow<?php echo "$d[kode_brg]"; ?>">Edit</a>
 				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-success updatepo purow<?php echo "$d[kode_brg]"; ?>" style="display:none;">Update</a>
+				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-danger deletepo pirow<?php echo "$d[kode_brg]"; ?>" style="display:none;">Hapus</a>
 						<div class="alert bg-warning crow<?php echo "$d[kode_brg]"; ?>" role="alert" style="display:none;">
 					<svg class="glyph stroked cancel"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-cancel"></use></svg> HAPUS DATA !!!
 					<br /><center><button id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-danger hapus">Hapus</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="tidak" class="btn btn-primary">Tidak</button></center>
@@ -78,7 +79,7 @@ $r=$row->fetch_assoc();
 $totalPo = $r['totalPo'];
 ?>		
         </tbody>
-		<tr style="background-color: #DDD;"><td colspan="5" align="right"></td><td colspan="1" align="right"><b>Total PO : </b></td><td align="right"><b>Rp. <?php echo number_format($totalPo,2,",",".") ?></b></td></td></td><td></td></tr>
+		<tr style="background-color: #DDD;"><td colspan="4" align="right"></td><td colspan="2" align="right"><b>Total PO : </b></td><td align="right"><b>Rp. <?php echo number_format($totalPo,2,",",".") ?></b></td></td></td><td></td></tr>
     </table>
 	<?php $sql = mysqli_query($connect_db,"SELECT * from detail_po_sem");
 							$row = mysqli_fetch_assoc($sql);
@@ -93,7 +94,7 @@ $totalPo = $r['totalPo'];
 <!--  ############################++++++++++++++++SCRIPT AJAX DELETING ================############################  -->		
 	<script type="text/javascript">
 	$(document).ready(function(){	
-	  $(".deleterow").click(function(){
+	  $(".deletepo").click(function(){
 	  var id = $(this).attr("id");
 	  $(".erow"+id).hide('slow');
 	  $(".drow"+id).hide('slow');
@@ -101,19 +102,20 @@ $totalPo = $r['totalPo'];
 	  });
 	  $("#tidak").click(function(){			
 			$(".alert").hide('slow');	
-			$(".deleterow").show('slow');	
+			$(".deletepo").show('slow');	
 			});
 	  $(".hapus").click(function(){
 	  var id = $(this).attr("id");
 	  var triger = "del";
+	  var btnaksi = "delete";
 	                $.ajax({
 					type: "POST",
-					url: "pros.php",
-					data: 'id=' + id + '&triger=' + triger,
+					url: "updatepoproses.php",
+					data: 'id=' + id + '&triger=' + triger + '&btnaksi=' + btnaksi,
 					success: function(html){
 						$('#successpop').show('slow');
 						$('.hilang').hide('slow');
-						$('.timbul').load('timbul2.php');
+						$('.keranjang').load('keranjangpo.php');
 					},	
 					error: function(){
 						$('#gagalpop').show('slow');
@@ -144,13 +146,14 @@ $totalPo = $r['totalPo'];
 	  var id = $(this).attr("id");
 	  $(".perow"+id).hide('slow');
 	  $(".purow"+id).show('slow');
-	  $("#editjumlah"+id).hide('slow');
-	  $("#boxjumlah"+id).show('slow');
+	   $(".pirow"+id).show('slow');
+	  $("#editjumlahkeranjang"+id).hide('slow');
+	  $("#boxjumlahkeranjang"+id).show('slow');
 	  $("#editharga"+id).hide('slow');
 	    });
 	  $(".updatepo").click(function(){
 	  var id = $(this).attr("id");
-	  var jumlah = $("input#boxjumlah"+id).val();
+	  var jumlah = $("input#boxjumlahkeranjang"+id).val();
 	  var harga = $("input#boxharga"+id).val();
 	  var kode = $("input#boxkodebrg"+id).val();
 	  var triger = "edit";

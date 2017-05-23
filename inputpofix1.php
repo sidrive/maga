@@ -188,11 +188,10 @@ while($d=$data->fetch_array()){
 				</td>
 				<td>
 				
-				<a id="<?php echo "$d[KODE_BRG]"; ?>" class="btn btn-success editrow erow<?php echo "$d[KODE_BRG]"; ?>">Tambah</a>
+				<a id="<?php echo "$d[KODE_BRG]"; ?>" class="btn btn-success tambahrow erow<?php echo "$d[KODE_BRG]"; ?>">Tambah</a>
 				<a id="<?php echo "$d[KODE_BRG]"; ?>" class="btn btn-danger updaterow urow<?php echo "$d[KODE_BRG]"; ?>" style="display:none;">Simpan</a>
-						<div class="alert bg-warning crow<?php echo "$d[KODE_BRG]"; ?>" role="alert" style="display:none;">
-					<svg class="glyph stroked cancel"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-cancel"></use></svg> HAPUS DATA !!!
-					<br /><center><button id="<?php echo "$d[KODE_BRG]"; ?>" class="btn btn-danger hapus">Hapus</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="tidak" class="btn btn-primary">Tidak</button></center>
+						<div>
+					
 				</td>
             </tr>
 <?php
@@ -268,7 +267,7 @@ $no++; }
 <!--  ############################++++++++++++++++SCRIPT AJAX EDITING ================############################  -->		
 	<script type="text/javascript">
 	$(document).ready(function(){	
-	  $(".editrow").click(function(){
+	  $(".tambahrow").click(function(){
 	  var id = $(this).attr("id");
 	  $(".erow"+id).hide('slow');
 	  $(".urow"+id).show('slow');
@@ -277,6 +276,8 @@ $no++; }
 	    });
 	  $(".updaterow").click(function(){
 	  var id = $(this).attr("id");
+	  $(".erow"+id).show('slow');
+	  $(".urow"+id).hide('slow');
 	  var kodesup = $("input#boxkodesup"+id).val();
 	  var barcode = $("input#boxbarcode"+id).val();
 	  var namabrg = $("input#boxnamabrg"+id).val();

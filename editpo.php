@@ -139,10 +139,10 @@ while($d=$data->fetch_array()){
 				<textarea name="alamat" cols="30" rows="10" class="form-control formnya" id="boxalamat<?php echo "$d[id_po]"; ?>" style="display:none;"><?php echo "$d[total]"; ?></textarea>
 				</td>
                 <td>
-				<button data-id="<?php echo "$d[kode_brg]"; ?>" type="button" class="btn btn-danger modaledit erow" data-toggle="modal" data-target="#myModal">Hap</button>
+				
 				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-success editrow erow<?php echo "$d[kode_brg]"; ?>">Edit</a>
 				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-success updaterow urow<?php echo "$d[kode_brg]"; ?>" style="display:none;">Update</a>
-				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-danger updaterow hapus<?php echo "$d[kode_brg]"; ?>" style="display:none;">Hapus</a>
+				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-danger deleterow hapus<?php echo "$d[kode_brg]"; ?>" style="display:none;">Hapus</a>
 						<div class="alert bg-warning crow<?php echo "$d[kode_brg]"; ?>" role="alert" style="display:none;">
 					<svg class="glyph stroked cancel"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-cancel"></use></svg> HAPUS DATA !!!
 					<br /><center><button id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-danger hapus">Hapus</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="tidak" class="btn btn-primary">Tidak</button></center>
@@ -199,11 +199,16 @@ $totalPo = $r['totalPo'];
 	<script src="js/bootstrap-datepicker.js"></script>
 	<script src="js/jquery.dataTables.min.js"></script>
     <script src="js/dataTables.bootstrap.min.js"></script>
+	<?php $cek = $connect_db->query("SELECT COUNT(id) as total FROM detail_po_sem");
+			$d = $cek->fetch_array();
+			if($d['total']<=10){
+	?>
     <script>
     	$(document).ready(function() {
     		$('#tabeldata').DataTable();
 		});	
     </script>
+			<?php } else{ } ?>
 <!--  ############################++++++++++++++++SCRIPT AJAX MODAL ================############################  -->		
 <!--  ############################++++++++++++++++SCRIPT AJAX MODAL ================############################  -->		
 	<script type="text/javascript">
@@ -222,13 +227,61 @@ $totalPo = $r['totalPo'];
 			});
 		 });
 	</script>	
+<!--  ############################++++++++++++++++SCRIPT AJAX DELETING ================############################  -->		
+<!--  ############################++++++++++++++++SCRIPT AJAX DELETING ================############################  -->		
+	<script type="text/javascript">
+	$(document).ready(function(){	
+	  $(".deleterow").click(function(){
+	  var id = $(this).attr("id");
+	  $(".erow"+id).hide('slow');
+	  $(".drow"+id).hide('slow');
+	  $(".crow"+id).show('slow');
+	  });
+	  $("#tidak").click(function(){			
+			$(".alert").hide('slow');	
+			$(".deleterow").show('slow');	
+			});
+	  $(".hapus").click(function(){
+	  var id = $(this).attr("id");
+	  var triger = "del";
+	  var btnaksi = "delete";
+	  var kode = $("input#boxkodebrg"+id).val();
+	                $.ajax({
+					type: "POST",
+					url: "editpoupdate.php",
+					data: 'id=' + id + '&triger=' + triger + '&btnaksi=' + btnaksi,
+					success: function(html){
+						$('#successpop').show('slow');
+						$('.hilang').hide('slow');
+						$('.timbul').load('timbul2.php?kode='+kode);
+					},	
+					error: function(){
+						$('#gagalpop').show('slow');
+					}
+					});
+	    var detik = 3;	
+		function hitung(){
+		var to = setTimeout(hitung,1000);
+		 detik --;
+		 if(detik < 0){
+		 clearTimeout(to);
+		$("#errorpop , #gagalpop, #successpop").hide('slow');
+		 }
+		 }
+		 hitung();
+			});
+		 $(document).mouseup(function(){
+		 $(".formnya, .updaterow, .alert").hide('slow');
+		 $(".textnya, .editrow, .deleterow").show('slow');
+		 });
+		 });
+	</script>	
 <!--  ############################++++++++++++++++SCRIPT AJAX EDITING ================############################  -->		
 <!--  ############################++++++++++++++++SCRIPT AJAX EDITING ================############################  -->		
 	<script type="text/javascript">
 	$(document).ready(function(){	
 	  $(".editrow").click(function(){
 	  var id = $(this).attr("id");
-	  $("#myModal").hide('slow');
 	  $(".erow"+id).hide('slow');
 	  $(".urow"+id).show('slow');
 	  $(".hapus"+id).show('slow');
