@@ -142,10 +142,10 @@ while($d=$data->fetch_array()){
 				
 				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-success editrow erow<?php echo "$d[kode_brg]"; ?>">Edit</a>
 				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-success updaterow urow<?php echo "$d[kode_brg]"; ?>" style="display:none;">Update</a>
-				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-danger deleterow hapus<?php echo "$d[kode_brg]"; ?>" style="display:none;">Hapus</a>
+				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-danger deletepo pirow<?php echo "$d[kode_brg]"; ?>" style="display:none;">Hapus</a>
 						<div class="alert bg-warning crow<?php echo "$d[kode_brg]"; ?>" role="alert" style="display:none;">
 					<svg class="glyph stroked cancel"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-cancel"></use></svg> HAPUS DATA !!!
-					<br /><center><button id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-danger hapus">Hapus</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="tidak" class="btn btn-primary">Tidak</button></center>
+					<br /><center><button id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-danger hapus1">Hapus</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="tidak" class="btn btn-primary">Tidak</button></center>
 				</td>
             </tr>			
 <?php
@@ -231,15 +231,16 @@ $totalPo = $r['totalPo'];
 <!--  ############################++++++++++++++++SCRIPT AJAX DELETING ================############################  -->		
 	<script type="text/javascript">
 	$(document).ready(function(){	
-	  $(".deleterow").click(function(){
+	  $(".deletepo").click(function(){
 	  var id = $(this).attr("id");
 	  $(".erow"+id).hide('slow');
-	  $(".drow"+id).hide('slow');
+	  $(".pirow"+id).hide('slow');
 	  $(".crow"+id).show('slow');
 	  });
 	  $("#tidak").click(function(){			
 			$(".alert").hide('slow');	
-			$(".deleterow").show('slow');	
+			$(".deletepo"+id).show('slow');
+			$(".editpo"+id).show('slow');
 			});
 	  $(".hapus").click(function(){
 	  var id = $(this).attr("id");
@@ -271,8 +272,8 @@ $totalPo = $r['totalPo'];
 		 hitung();
 			});
 		 $(document).mouseup(function(){
-		 $(".formnya, .updaterow, .alert").hide('slow');
-		 $(".textnya, .editrow, .deleterow").show('slow');
+		 $(".formnya, .alert").hide('slow');
+		 $(".textnya, .editrow, .deletepo"+id).show('slow');
 		 });
 		 });
 	</script>	
@@ -284,7 +285,7 @@ $totalPo = $r['totalPo'];
 	  var id = $(this).attr("id");
 	  $(".erow"+id).hide('slow');
 	  $(".urow"+id).show('slow');
-	  $(".hapus"+id).show('slow');
+	  $(".pirow"+id).show('slow');
 	  $("#editjumlah"+id).hide('slow');
 	  $("#boxjumlah"+id).show('slow');
 	  $("#editharga"+id).hide('slow');

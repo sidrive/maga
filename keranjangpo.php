@@ -96,8 +96,8 @@ $totalPo = $r['totalPo'];
 	$(document).ready(function(){	
 	  $(".deletepo").click(function(){
 	  var id = $(this).attr("id");
-	  $(".erow"+id).hide('slow');
-	  $(".drow"+id).hide('slow');
+	  $(".purow"+id).hide('slow');
+	  $(".pirow"+id).hide('slow');
 	  $(".crow"+id).show('slow');
 	  });
 	  $("#tidak").click(function(){			
@@ -133,8 +133,8 @@ $totalPo = $r['totalPo'];
 		 hitung();
 			});
 		 $(document).mouseup(function(){
-		 $(".formnya, .updaterow, .alert").hide('slow');
-		 $(".textnya, .editrow, .deleterow").show('slow');
+		 $(".formnya, .updatepo, .alert").hide('slow');
+		 $(".textnya, .editpo, .deletepo").show('slow');
 		 });
 		 });
 	</script>	
