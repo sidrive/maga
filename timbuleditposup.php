@@ -1,11 +1,11 @@
 <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
 	<script src="js/jquery.dataTables.min.js"></script>
     <script src="js/dataTables.bootstrap.min.js"></script>
-    <script>
+<!--    <script>
     	$(document).ready(function() {
     		$('#tabeldata').DataTable();
 		});	
-    </script>	
+    </script>	-->
 			<div class="col-lg-12 hilang">
 				<div class="panel panel-default">
 					<div class="panel-heading"></div>
@@ -63,12 +63,13 @@ while($d=$data->fetch_array()){
 				<textarea name="alamat" cols="30" rows="10" class="form-control formnya" id="boxalamat<?php echo "$d[id_po]"; ?>" style="display:none;"><?php echo "$d[total]"; ?></textarea>
 				</td>
                 <td>
-				<button data-id="<?php echo "$d[kode_brg]"; ?>" type="button" class="btn btn-info modaledit erow" data-toggle="modal" data-target="#myModal">Edit</button>
+				
 				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-success editrow erow<?php echo "$d[kode_brg]"; ?>">Edit</a>
 				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-success updaterow urow<?php echo "$d[kode_brg]"; ?>" style="display:none;">Update</a>
+				<a id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-danger deleterow pirow<?php echo "$d[kode_brg]"; ?>" style="display:none;">Hapus</a>
 						<div class="alert bg-warning crow<?php echo "$d[kode_brg]"; ?>" role="alert" style="display:none;">
 					<svg class="glyph stroked cancel"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-cancel"></use></svg> HAPUS DATA !!!
-					<br /><center><button id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-danger hapus">Hapus</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="tidak" class="btn btn-primary">Tidak</button></center>
+					<br /><center><button id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-danger delete">Hapus</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="tidak" class="btn btn-primary">Tidak</button></center>
 				</td>
             </tr>			
 <?php
@@ -96,24 +97,27 @@ $totalPo = $r['totalPo'];
 	  $(".deleterow").click(function(){
 	  var id = $(this).attr("id");
 	  $(".erow"+id).hide('slow');
-	  $(".drow"+id).hide('slow');
+	  $(".pirow"+id).hide('slow');
 	  $(".crow"+id).show('slow');
 	  });
 	  $("#tidak").click(function(){			
 			$(".alert").hide('slow');	
-			$(".deleterow").show('slow');	
+			$(".deletepo"+id).show('slow');
+			$(".editpo"+id).show('slow');
 			});
-	  $(".hapus").click(function(){
+	  $(".delete").click(function(){
 	  var id = $(this).attr("id");
-	  var triger = "del";
+	  var triger = "delpo";
+	  var btnaksi = "delete";
+	  var kode = $("input#boxkodebrg"+id).val();
 	                $.ajax({
 					type: "POST",
-					url: "pros.php",
-					data: 'id=' + id + '&triger=' + triger,
+					url: "editpoupdate.php",
+					data: 'id=' + id + '&triger=' + triger + '&btnaksi=' + btnaksi + '&kode=' + kode,
 					success: function(html){
 						$('#successpop').show('slow');
 						$('.hilang').hide('slow');
-						$('.timbul').load('timbul2.php');
+						$('.timbul').load('timbuleditposup.php?kode='+kode);
 					},	
 					error: function(){
 						$('#gagalpop').show('slow');
@@ -131,19 +135,21 @@ $totalPo = $r['totalPo'];
 		 hitung();
 			});
 		 $(document).mouseup(function(){
-		 $(".formnya, .updaterow, .alert").hide('slow');
-		 $(".textnya, .editrow, .deleterow").show('slow');
+		 $(".formnya, .alert").hide('slow');
+		 $(".textnya, .editrow, .deletepo"+id).show('slow');
 		 });
 		 });
-	</script>	
+	</script>
 <!--  ############################++++++++++++++++SCRIPT AJAX EDITING ================############################  -->		
 <!--  ############################++++++++++++++++SCRIPT AJAX EDITING ================############################  -->		
 	<script type="text/javascript">
 	$(document).ready(function(){	
 	  $(".editrow").click(function(){
 	  var id = $(this).attr("id");
+	  $("#myModal").hide('slow');
 	  $(".erow"+id).hide('slow');
 	  $(".urow"+id).show('slow');
+	  $(".pirow"+id).show('slow');
 	  $("#editjumlah"+id).hide('slow');
 	  $("#boxjumlah"+id).show('slow');
 	  $("#editharga"+id).hide('slow');
@@ -163,7 +169,7 @@ $totalPo = $r['totalPo'];
 					type: "POST",
 					url: "editpoupdate.php",
 					dataType: 'json',
-					data: 'id=' + id + '&jumlah=' + jumlah + '&harga=' + harga + '&triger=' + triger + '&btnaksi=' + btnaksi,
+					data: 'id=' + id + '&jumlah=' + jumlah + '&harga=' + harga + '&triger=' + triger + '&btnaksi=' + btnaksi + '&kode=' + kode,
 					success: function(html){
 						$('#successpop').show('slow');
 						$('.hilang').hide('slow');

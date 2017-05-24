@@ -38,6 +38,35 @@ $id=$_POST['id'];
 $connect_db->query("delete from detail_po_sem where kode_brg='$id' ");
 }
 
+if($triger == 'delpo'){
+$id=$_POST['id'];
+$kode = $_POST['kode'];
+$a=$connect_db->query("delete from detail_po where kode_brg='$id' and id_po = '$kode'");
+
+$data=$connect_db->query("select sum(total) as total FROM detail_po where id_po = '$kode'");
+	$d=$data->fetch_assoc();
+	$total = $d['total'];
+$c=$connect_db->query("UPDATE po SET total = $total where id_po = '$kode'"); 
+}
+
+if($triger == 'editposup'){
+$id=$_POST['id'];
+$kode=$_POST['kode'];
+$jumlah=$_POST['jumlah'];
+$harga=$_POST['harga'];
+$totalpo = $harga * $jumlah;
+$res=$connect_db->query("UPDATE detail_po SET jml_brg=$jumlah, total=$totalpo WHERE kode_brg=$id");
+
+$data=$connect_db->query("select sum(total) as total FROM detail_po where id_po = '$kode'");
+	$d=$data->fetch_assoc();
+	$total = $d['total'];
+$c=$connect_db->query("UPDATE po SET total = $total where id_po = '$kode'");
+
+if($res){
+echo json_encode(array());
+}
+}
+
 if($triger == 'tambah'){
 $res=$connect_db->query("insert into data_test (data_id) values('')");
 if($res){
@@ -57,17 +86,6 @@ echo json_encode(array());
 }
 }
 
-if($triger == 'editposup'){
-$id=$_POST['id'];
-$jumlah=$_POST['jumlah'];
-$harga=$_POST['harga'];
-$totalpo = $harga * $jumlah;
-$res=$connect_db->query("UPDATE detail_po SET jml_brg=$jumlah, total=$totalpo WHERE kode_brg=$id");
-
-if($res){
-echo json_encode(array());
-}
-}
 
 if($triger == 'cekharga'){
 $kode=$_POST['kode'];
