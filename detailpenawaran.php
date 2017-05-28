@@ -124,11 +124,15 @@ while($d=$data->fetch_array()){
 				<span id="editharga<?php echo "$d[id]"; ?>" class="textnya"><?php echo number_format($d['harga_brg'],2,",",".");; ?></span>	
 				<input readonly type="text" name="harga" value="<?php echo "$d[hrg_sup]"; ?>" class="form-control formnya" id="boxharga<?php echo "$d[kode_brg]"; ?>" style="display:none;"/>
 				</td>
-				<td>
-				<span id="editjumlah<?php echo "$d[kode_brg]"; ?>" class="textnya"><?php echo "$d[foto]"; ?></span>
+				<td align="center">
+				<span id="editjumlah<?php echo "$d[kode_brg]"; ?>" class="textnya"><img src="http://localhost:8080/maga1/img/<?php echo "$d[foto]"; ?>" class="img-responsive img-thumbnail" width="100" > </span>
 				<input type="text" name="jumlah" value="<?php echo "$d[jml_brg]"; ?>" class="form-control formnya" id="boxjumlah<?php echo "$d[kode_brg]"; ?>" style="display:none;"/>
 				</td>
-				<td>
+				<td> <?php $cek = mysqli_query($connect_db,"SELECT status_maga FROM penawaran WHERE id_penawaran = '$_GET[kode]'");
+				$da = mysqli_fetch_assoc($cek); 
+				if($da['status_maga']== "N") {?>
+				<a id="btninput" class="btn btn-success editrow erow" onclick="window.location='simpanpenawaran.php?kode=<?php echo $d['id_penawaran']?>'">Setuju</a>
+				<?php }else{}?>
 					<div class="alert bg-warning crow<?php echo "$d[kode_brg]"; ?>" role="alert" style="display:none;">
 					<svg class="glyph stroked cancel"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-cancel"></use></svg> HAPUS DATA !!!
 					<br /><center><button id="<?php echo "$d[kode_brg]"; ?>" class="btn btn-danger hapus">Hapus</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="tidak" class="btn btn-primary">Tidak</button></center>

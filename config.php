@@ -5,4 +5,4 @@
 	define('DB_HOST','localhost');
 	
 	//defined a new constant for firebase api key
-	define('FIREBASE_API_KEY', 'AIzaSyCg4qNvTWhl8Pjua-PozWgnPkKL8U-floM');
+	define('FIREBASE_API_KEY','AIzaSyAOCwHoyVCqyNhcezUOusGfC1jnAVgTw0w');
