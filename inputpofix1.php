@@ -123,7 +123,7 @@
 						<th>
 						<select class="form-control" name="kode" style="width:200px">
 						<option value="">Pilih Suplier</option>
-							<?php $sql = mysqli_query($connect_db,"SELECT * FROM SUP ORDER BY NAMA_SUP ASC");
+							<?php $sql = mysqli_query($connect_db,"SELECT * FROM sup ORDER BY NAMA_SUP ASC");
 							while ($row = mysqli_fetch_array($sql)) { echo
 							"<option value='"; echo $row['KODE_SUP']."'>";
 							echo $row['NAMA_SUP']."</option>";

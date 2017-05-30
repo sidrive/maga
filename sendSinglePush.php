@@ -6,7 +6,8 @@ require_once 'Push.php';
 
 $db = new DbOperation();
 
-$response = array(); 
+$response = array();
+
 //$title = $_GET['title'];
 //$message = $_GET['message'];
 if($_SERVER['REQUEST_METHOD']=='GET'){	
@@ -52,4 +53,4 @@ if($_SERVER['REQUEST_METHOD']=='GET'){
 }
 
 echo json_encode($response);
-//header("location:index.php");
+header("location:index.php");

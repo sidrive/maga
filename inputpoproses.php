@@ -52,7 +52,7 @@ $namabrg=$_POST['namabrg'];
 $jumlah=$_POST['jumlah'];
 $harga=$_POST['harga'];
 $totalpo = $harga * $jumlah;
-$idpo = 'FBMG'.date('dmy').'-'.$_POST['kodesup'];
+$idpo = 'FBMG'.date('dmy-hi').'-'.$_POST['kodesup'];
 $edit = date('Y-m-d');
 	$cek=$connect_db->query("SELECT * FROM detail_po_sem WHERE kode_brg = '$id' ");
 	$d=$cek->fetch_array();

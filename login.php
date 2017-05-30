@@ -1,7 +1,7 @@
 <?php  
     // Lampirkan db dan User
     require_once "koneksi.php";
-    require_once "user.php";
+    require_once "User.php";
 
     //Buat object user
     $user = new User($db);

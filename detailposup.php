@@ -1,7 +1,7 @@
 <?php
   // memanggil file koneksi.php untuk melakukan koneksi database
  require_once("koneksi.php");
- require_once "user.php";
+ require_once "User.php";
 
     // Buat object user
     $user = new User($db);

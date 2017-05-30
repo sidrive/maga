@@ -25,8 +25,7 @@
 
 $id = $_GET['kode'];
 $sup = $_GET['sup'];
-$title = "Maga Swalayan";
-$message = "PO Baru Telah ditambahkan untuk Perusahaan Anda";
+
 		 	
 	echo "<div class='container'>
     <h1>Tabel Detail PO </h1>
@@ -106,7 +105,7 @@ $message = "PO Baru Telah ditambahkan untuk Perusahaan Anda";
 		$data=$connect_db->query("DELETE FROM detail_po_sem");
 	/* Bersihkan data pada tabel detail_po_sem */		
 	$title = "Maga Swalayan - PO -";
-$message = "PO Baru Telah ditambahkan ke Perusahaan Anda";
+$message = "PO Baru, $id Telah ditambahkan ke Perusahaan Anda";
 	 /* Mengalihkan ke index.php */  header("location:sendSinglePush.php?sup=$sup&title=$title&message=$message");
         ?>
 </body>

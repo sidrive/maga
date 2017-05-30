@@ -1,6 +1,6 @@
 <?php 
 	require_once("koneksi.php");
-    require_once "user.php";
+    require_once "User.php";
 
     // Buat object user
     $user = new User($db);
@@ -22,7 +22,6 @@
 <body>
 
 <?php
-
 $id = $_GET['kode'];
    
 	$queryTotalPo = "SELECT sum(total) as total_po from detail_po WHERE id_po = '$id'";
@@ -34,8 +33,12 @@ $id = $_GET['kode'];
 	  $updatepo = "UPDATE po SET total = $totalPo, status_maga = 'Y' WHERE id_po = '$id'";
 					$resultSimpanPo = mysqli_query($connect_db, $updatepo);
 					
-		
-	 /* Mengalihkan ke index.php */  header("location:index.php"); 
+		$query = mysqli_query($connect_db, "SELECT kode_sup from po WHERE id_po = '$id'");
+		$d = mysqli_fetch_assoc($query);
+		$sup = $d['kode_sup'];
+		$title = "Maga Swalayan - Edit PO -";
+		$message = "PO $id telah di edit oleh Maga Swalayan, silahkan konfirmasi..!!";
+	 /* Mengalihkan ke index.php */  header("location:sendSinglePush.php?sup=$sup&title=$title&message=$message"); 
         ?>
 </body>
 </html>

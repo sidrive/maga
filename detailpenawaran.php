@@ -1,7 +1,7 @@
 <?php
   // memanggil file koneksi.php untuk melakukan koneksi database
  require_once("koneksi.php");
- require_once "user.php";
+ require_once "User.php";
 
     // Buat object user
     $user = new User($db);
@@ -125,7 +125,7 @@ while($d=$data->fetch_array()){
 				<input readonly type="text" name="harga" value="<?php echo "$d[hrg_sup]"; ?>" class="form-control formnya" id="boxharga<?php echo "$d[kode_brg]"; ?>" style="display:none;"/>
 				</td>
 				<td align="center">
-				<span id="editjumlah<?php echo "$d[kode_brg]"; ?>" class="textnya"><img src="http://localhost:8080/maga1/img/<?php echo "$d[foto]"; ?>" class="img-responsive img-thumbnail" width="100" > </span>
+				<span id="editjumlah<?php echo "$d[kode_brg]"; ?>" class="textnya"><img src="http://nurmuha.hostzi.com/maga1/img/<?php echo "$d[foto]"; ?>" class="img-responsive img-thumbnail" width="100" > </span>
 				<input type="text" name="jumlah" value="<?php echo "$d[jml_brg]"; ?>" class="form-control formnya" id="boxjumlah<?php echo "$d[kode_brg]"; ?>" style="display:none;"/>
 				</td>
 				<td> <?php $cek = mysqli_query($connect_db,"SELECT status_maga FROM penawaran WHERE id_penawaran = '$_GET[kode]'");
