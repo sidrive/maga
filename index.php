@@ -50,8 +50,8 @@
 		 <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Input PO<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="inputpofix.php?kode=0">Input PO 1</a></li>
-            <li><a href="inputpofix1.php?kode=0">Input PO 2</a></li>
+            
+            <li><a href="inputpofix1.php?kode=0">Input PO</a></li>
           </ul>
         </li>
         <li class="dropdown">
@@ -97,8 +97,9 @@
         <tbody>
            <?php
 		   
-$data=$connect_db->query("select * from brg WHERE (BLAKHR <= '2017-03-30' AND BLAKHR >= '2017-03-01') AND (JML_BARANG <=5) AND (AWAL >=1 ) AND (JLAKHR >= '2017-03-01') ORDER BY JML_BARANG ASC");
+$data=$connect_db->query("select * from brg WHERE (BLAKHR <= '2017-03-30' AND BLAKHR >= '2017-03-01') AND (JML_BARANG <=5) AND (AWAL >=1 ) AND (JLAKHR >= '2017-03-01') ORDER BY SUP, JML_BARANG ASC");
 $no=1;
+$kodesuplus = 0;
 while($d=$data->fetch_array()){ 
 ?>
 <input type="hidden"  id="editriger" value="edit"/>
@@ -130,8 +131,11 @@ while($d=$data->fetch_array()){
 				<input type="text" name="jumlah" value="<?php echo "$d[JML_BARANG]"; ?>" class="form-control formnya" id="boxjumlah<?php echo "$d[KODE_BRG]"; ?>" style="display:none;"/>
 				</td>
 				<td>
-				
-				<a id="btninput" class="btn btn-success editrow erow" onclick="window.location='inputpofix1.php?kode=<?php echo $d['SUP']?>'">Tambah</a>
+				<?php if($kodesuplus == $d['SUP'].'a'){
+						$display = 'style="display:none;"'; }
+						else{ $display = 'style=""';}
+				?>
+				<a id="btninput" class="btn btn-danger editrow erow" onclick="window.location='inputpofix1.php?kode=<?php echo $d['SUP']?>'" <?php echo $display; ?> >Buat PO</a>
 				<a id="<?php echo "$d[KODE_BRG]"; ?>" class="btn btn-danger updaterow urow<?php echo "$d[KODE_BRG]"; ?>" style="display:none;">Simpan</a>
 						<div class="alert bg-warning crow<?php echo "$d[KODE_BRG]"; ?>" role="alert" style="display:none;">
 					<svg class="glyph stroked cancel"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-cancel"></use></svg> HAPUS DATA !!!
@@ -139,7 +143,8 @@ while($d=$data->fetch_array()){
 				</td>
             </tr>
 <?php
-$no++; }
+$no++;
+$kodesuplus = $d['SUP'].'a'; }
 
 ?>				
         </tbody>

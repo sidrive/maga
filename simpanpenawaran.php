@@ -25,7 +25,7 @@
 
 $id = $_GET['kode'];
 $title = "Maga Swalayan - Penawaran -";
-$message = "Penawaran Barang Anda Telah Disetujui Oleh Maga Swalayan";
+$message = "Penawaran Barang Anda, $id Telah Disetujui Oleh Maga Swalayan";
 		 	
 	$query2 = "UPDATE penawaran SET status_maga = 'Y' where id_penawaran='$id'";
 			$result2 = mysqli_query($connect_db, $query2);

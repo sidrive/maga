@@ -140,7 +140,7 @@
                 <th class="text-center" width="100px">Total Harga PO</th>
 				<th class="text-center" width="50px">Status Maga</th>
 				<th class="text-center" width="50px">Status Suplier</th>
-				<th class="text-center" width="50px">Status Pengiriman</th>
+				
 				<th class="text-center">Opsi</th>
             </tr>
         </thead>
@@ -199,15 +199,7 @@ while($d=$data->fetch_array()){
 				} ?></span>
 				<input type="text" name="barcode" value="<?php echo "$d[kode_sup]"; ?>" class="form-control formnya" id="boxbarcode<?php echo "$d[id_po]"; ?>" style="display:none;"/>
 				</td>
-				<td>
-				<span id="editstsmaga<?php echo "$d[id_po]"; ?>" class="textnya"><?php 	
-				if ($d['status_kirim']== 'Y'){
-					$status = 'Terkirim'; echo $status;
-				} if ($d['status_kirim']== 'N'){
-					$status = 'Belum'; echo $status;
-				} ?></span>
-				<input type="text" name="barcode" value="<?php echo "$d[kode_sup]"; ?>" class="form-control formnya" id="boxbarcode<?php echo "$d[id_po]"; ?>" style="display:none;"/>
-				</td>
+				
 				</td>
 				<td align="center">
 				<button type="button" class="btn btn-info modaledit erow" onclick="window.location='detailposup.php?kode=<?php echo $d['id_po']?>';">Detail PO</button>

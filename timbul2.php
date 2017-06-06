@@ -12,10 +12,13 @@
     		$('#tabeldata').DataTable();
 		});	
     </script>
-			<?php } else{ } ?>
+			<?php } else{ } 
+			$kode = substr($_GET['kode'],-4);
+		$sup = $connect_db->query("select * from sup where KODE_SUP = '$kode' ")->fetch_array();
+		?>
 			<div class="col-lg-12 hilang">
 				<div class="panel panel-default">
-					<div class="panel-heading"></div>
+					<div class="panel-heading" align="center">TABEL DETAIL PO "<?php echo $sup['NAMA_SUP'];?>"</div>
 					<div class="panel-body">
 					<div class="table-responsive">
 		<table width="100%" class="table table-striped table-bordered" id="tabeldata" >
