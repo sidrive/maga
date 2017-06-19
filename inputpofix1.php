@@ -43,69 +43,46 @@
 <body>
 	<?php  //include"header.php"; ?>
 	<header>
-		
-		<!--start: Container -->
-		<div class="container">
-			
-			<!--start: Row -->
-			<div class="row">
-					
-				<!--start: Logo -->
-				
-				<nav class="navbar navbar-default">
-					<div class="container-fluid">
-						<div class="navbar-header">
-						<a class="navbar-brand" href="#">
-						<img alt="logo" src="img/logo1.png">
-						</a>
-						</div>
-					
-				
-				<!--end: Logo -->
-					
-				<!--start: Navigation -->
-				
-					
-					
-			    		<div class="navbar-inner">
-			          		<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-			            		<span class="icon-bar"></span>
-			            		<span class="icon-bar"></span>
-			            		<span class="icon-bar"></span>
-			          		</a>
-			          		<div class="nav-collapse collapse">
-			            		<ul class="nav">
-			              			<li class="active"><a href="index.php">PO Baru</a></li>
-			              			<li><a href="produk.php">Daftar PO</a></li>
-									<li><a href="testimoni.php">Penawaran</a></li>
-                                    <li><a href="detail_po.php">Data Barang</a></li>
-			              			<li class="dropdown">
-			                			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Login <b class="caret"></b></a>
-			                			<ul class="dropdown-menu">
-			                  				<li><a href="index.html">Admin</a></li>
-			                  				<li><a href="index.php">MD</a></li>
-			                  				<!--<li class="divider"></li>
-			                  				<li class="nav-header">Nav header</li>
-			                  				<li><a href="#">Separated link</a></li>
-			                  				<li><a href="#">One more separated link</a></li>-->
-			                			</ul>
-			              			</li>
-			            		</ul>
-			          		</div>
-			        	</div>
-			      	
-					
-				
-				<!--end: Navigation -->
-				
-				</div>
-					</nav>
-			</div>
-			<!--end: Row -->
-			
-		</div>
-		<!--end: Container-->			
-			
+	<div class="container">
+<div class="row">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#"><img alt="logo" src="img/logo12.png"></a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="index.php">Home</a></li>
+		 <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Input PO<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            
+            <li><a href="inputpofix1.php?kode=0">Input PO</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Daftar PO<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="daftarpo.php">PO Baru</a></li>
+            <li><a href="daftarpoterkirim.php">PO Selesai</a></li>
+          </ul>
+        </li>
+        <li><a href="daftarpenawaran.php">Penawaran</a></li>
+        <li><a href="#">Admin</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</div>
+</div>
 	</header>
 	<!--end: Header-->
 	
@@ -139,8 +116,10 @@
 					<div class="row keranjang"></div>
 		<div class="row timbul">
 			<div class="col-lg-12">
-				<div class="panel panel-default">
-					<div class="panel-heading">TABEL DATA BARANG</div>
+				<div class="panel panel-default"><?php
+		   					$data=$connect_db->query("select NAMA_SUP from sup where KODE_SUP = '$_GET[kode]'"); 
+							$d=$data->fetch_array()?>
+					<div class="panel-heading">TABEL DATA BARANG <?php echo $d['NAMA_SUP'];?></div>
 					<div class="panel-body">
 					<div class="table-responsive">
 		<table width="100%" class="table table-striped table-bordered" id="tabeldata" >
